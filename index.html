@@ -685,80 +685,104 @@
     }
 
     async function createRoom() {
-      if (!checkConfigured()) return;
+  try {
+    setMessage("Creating room...");
 
-      const nameInput = $("createName");
-      const name = (nameInput.value || "").trim();
+    if (!configured) {
+      setMessage("Supabase URL/key are missing in index.html.");
+      return;
+    }
 
-      if (!name) {
-        setMessage("Enter your name first.");
-        return;
-      }
+    if (!window.supabase) {
+      setMessage("Supabase script did not load. Check internet or CDN script.");
+      return;
+    }
 
-      const hostToken = makeToken();
-      const playerToken = makeToken();
+    if (!db) {
+      db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
 
-      let code = roomCode();
-      let room = null;
+    const nameInput = $("createName");
+    const name = (nameInput && nameInput.value ? nameInput.value : "").trim();
 
-      for (let tries = 0; tries < 8; tries += 1) {
-        code = roomCode();
+    if (!name) {
+      setMessage("Enter your name first.");
+      return;
+    }
 
-        const insertRoom = await db
-          .from("korr_rooms")
-          .insert({
-            room_code: code,
-            host_token: hostToken,
-            status: "lobby",
-            round_number: 1,
-            max_rounds: MAX_ROUNDS
-          })
-          .select()
-          .single();
+    const hostToken = makeToken();
+    const playerToken = makeToken();
 
-        if (!insertRoom.error) {
-          room = insertRoom.data;
-          break;
-        }
-      }
+    let code = roomCode();
+    let room = null;
+    let lastError = null;
 
-      if (!room) {
-        setMessage("Could not create a room. Try again.");
-        return;
-      }
+    for (let tries = 0; tries < 8; tries += 1) {
+      code = roomCode();
 
-      const ident = IDENTITY_DECK[0];
-
-      const insertPlayer = await db
-        .from("korr_players")
+      const insertRoom = await db
+        .from("korr_rooms")
         .insert({
           room_code: code,
-          player_name: name,
-          player_token: playerToken,
-          color: ident.color,
-          shape: ident.shape,
-          score: 0
+          host_token: hostToken,
+          status: "lobby",
+          round_number: 1,
+          max_rounds: MAX_ROUNDS
         })
         .select()
         .single();
 
-      if (insertPlayer.error) {
-        setMessage(insertPlayer.error.message);
-        return;
+      if (!insertRoom.error) {
+        room = insertRoom.data;
+        break;
       }
 
-      appState.me = {
-        roomCode: code,
-        playerId: insertPlayer.data.id,
-        playerToken: playerToken,
-        hostToken: hostToken
-      };
-
-      saveLocalPlayer();
-      setMessage("Room created: " + code);
-      await loadAll();
-      subscribeRoom();
+      lastError = insertRoom.error;
+      console.log("Create room error:", insertRoom.error);
     }
+
+    if (!room) {
+      setMessage("Room table error: " + (lastError ? lastError.message : "unknown error"));
+      return;
+    }
+
+    const ident = IDENTITY_DECK[0];
+
+    const insertPlayer = await db
+      .from("korr_players")
+      .insert({
+        room_code: code,
+        player_name: name,
+        player_token: playerToken,
+        color: ident.color,
+        shape: ident.shape,
+        score: 0
+      })
+      .select()
+      .single();
+
+    if (insertPlayer.error) {
+      console.log("Create player error:", insertPlayer.error);
+      setMessage("Player table error: " + insertPlayer.error.message);
+      return;
+    }
+
+    appState.me = {
+      roomCode: code,
+      playerId: insertPlayer.data.id,
+      playerToken: playerToken,
+      hostToken: hostToken
+    };
+
+    saveLocalPlayer();
+    setMessage("Room created: " + code);
+    await loadAll();
+    subscribeRoom();
+  } catch (err) {
+    console.log("Create room crashed:", err);
+    setMessage("Create room crashed: " + (err && err.message ? err.message : String(err)));
+  }
+}
 
     async function joinRoom() {
       if (!checkConfigured()) return;

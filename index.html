@@ -9,11 +9,13 @@
   <style>
     :root {
       --ink: #172317;
-      --muted: #637163;
+      --muted: #6b735f;
       --green: #244e2c;
       --gold: #f1bf36;
+      --gold2: #c99a2f;
       --red: #a9322b;
       --card: rgba(255,255,255,.91);
+      --dark: #071007;
     }
 
     * {
@@ -28,9 +30,9 @@
       font-family: Arial, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(circle at 15% 10%, rgba(241,191,54,.30), transparent 30%),
-        radial-gradient(circle at 85% 5%, rgba(111,190,115,.24), transparent 34%),
-        linear-gradient(135deg, #0d130d, #172317 45%, #2c2a14);
+        radial-gradient(circle at 15% 8%, rgba(241,191,54,.28), transparent 28%),
+        radial-gradient(circle at 90% 8%, rgba(111,190,115,.20), transparent 32%),
+        linear-gradient(135deg, #0b100b, #172317 45%, #2b2614);
     }
 
     body {
@@ -56,11 +58,11 @@
 
     .hero {
       border-radius: 24px;
-      padding: 16px;
-      color: #fff;
+      padding: 15px;
+      color: white;
       background:
         linear-gradient(135deg, rgba(255,255,255,.12), rgba(255,255,255,.03)),
-        linear-gradient(135deg, #122512, #263d20 58%, #5a4211);
+        linear-gradient(135deg, #111e11, #263d20 58%, #5a4211);
       border: 1px solid rgba(255,255,255,.18);
       box-shadow: 0 18px 50px rgba(0,0,0,.35);
       position: relative;
@@ -69,10 +71,10 @@
     }
 
     .hero::before {
-      content: "★ ▲ ● ■";
+      content: "★ ♦ ♣ ♠";
       position: absolute;
       right: -18px;
-      top: -8px;
+      top: -10px;
       font-size: 70px;
       opacity: .10;
       transform: rotate(-10deg);
@@ -82,12 +84,14 @@
 
     .title {
       position: relative;
-      font-size: clamp(38px, 10vw, 68px);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(38px, 10vw, 72px);
       line-height: .88;
-      letter-spacing: -2px;
+      letter-spacing: 1px;
       font-weight: 1000;
       text-transform: uppercase;
-      text-shadow: 0 4px 20px rgba(0,0,0,.45);
+      color: #f8df91;
+      text-shadow: 0 4px 20px rgba(0,0,0,.55);
     }
 
     .subtitle {
@@ -96,15 +100,6 @@
       color: rgba(255,255,255,.78);
       font-weight: 850;
       font-size: 14px;
-    }
-
-    .top-row {
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
-      flex-wrap: wrap;
     }
 
     .room-chips {
@@ -132,7 +127,7 @@
 
     .room-chip {
       background: rgba(255,255,255,.12);
-      color: #fff;
+      color: white;
       border-color: rgba(255,255,255,.18);
       font-size: 13px;
     }
@@ -149,7 +144,7 @@
 
     .badge.dark {
       background: rgba(255,255,255,.12);
-      color: #fff;
+      color: white;
       border-color: rgba(255,255,255,.14);
     }
 
@@ -164,14 +159,14 @@
     }
 
     .card.dark {
-      background: rgba(15,25,14,.80);
-      border-color: rgba(255,255,255,.16);
-      color: #fff;
+      background: rgba(10,18,10,.86);
+      border-color: rgba(241,191,54,.28);
+      color: white;
     }
 
     .control-card {
-      margin-top: 0;
       background: rgba(255,255,255,.94);
+      margin-top: 0;
     }
 
     .section-title {
@@ -199,16 +194,11 @@
       color: rgba(255,255,255,.72);
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(126px, 1fr));
-      gap: 9px;
-    }
-
-    .players-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
-      gap: 7px;
+    .row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     .two {
@@ -217,11 +207,10 @@
       gap: 10px;
     }
 
-    .row {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(126px, 1fr));
+      gap: 9px;
     }
 
     .field {
@@ -230,10 +219,6 @@
       color: #50614f;
       font-size: 12px;
       font-weight: 950;
-    }
-
-    .dark .field {
-      color: rgba(255,255,255,.72);
     }
 
     input,
@@ -262,7 +247,7 @@
       border-radius: 15px;
       padding: 10px 12px;
       background: var(--green);
-      color: #fff;
+      color: white;
       font-size: 15px;
       font-weight: 1000;
       box-shadow: 0 4px 0 rgba(0,0,0,.18);
@@ -281,7 +266,7 @@
 
     .btn.red {
       background: var(--red);
-      color: #fff;
+      color: white;
     }
 
     .btn.light {
@@ -290,97 +275,93 @@
       border: 1px solid rgba(24,35,24,.14);
     }
 
+    .btn.full {
+      width: 100%;
+    }
+
     .btn.small {
       padding: 8px 10px;
       border-radius: 13px;
       font-size: 13px;
     }
 
-    .btn.full {
-      width: 100%;
+    .message {
+      margin: 0 0 8px;
+      padding: 8px 10px;
+      border-radius: 14px;
+      background: #fff7cf;
+      color: #4d3a04;
+      border: 1px solid rgba(160,125,20,.25);
+      font-weight: 900;
+      box-shadow: 0 4px 12px rgba(0,0,0,.10);
     }
 
-    .symbol {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 28px;
-      height: 28px;
-      font-size: 27px;
-      line-height: 1;
-      font-weight: 1000;
-      color: var(--sym);
-      text-shadow:
-        0 1px 0 rgba(255,255,255,.85),
-        0 3px 10px rgba(0,0,0,.22);
-      flex: 0 0 auto;
+    .mode-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
 
-    .symbol.big {
+    .mode-card {
+      text-align: left;
+      min-height: 165px;
+      border-radius: 22px;
+      padding: 15px;
+      border: 1px solid rgba(241,191,54,.28);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.03)),
+        rgba(10,18,10,.86);
+      color: white;
+      box-shadow: 0 12px 30px rgba(0,0,0,.18);
+    }
+
+    .mode-card h2 {
+      margin: 0 0 8px;
+      color: #f9dd80;
+      font-size: 23px;
+    }
+
+    .mode-card p {
+      margin: 0 0 12px;
+      color: rgba(255,255,255,.73);
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .picker-wrap {
+      display: grid;
+      gap: 10px;
+    }
+
+    .picker-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .color-pick,
+    .symbol-pick {
       width: 42px;
       height: 42px;
-      font-size: 40px;
-    }
-
-    .player-card {
-      position: relative;
-      min-height: 56px;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      grid-template-rows: auto auto;
-      column-gap: 6px;
-      align-items: center;
-      padding: 8px 7px;
-      border-radius: 15px;
-      background: rgba(255,255,255,.78);
-      border: 1px solid rgba(24,35,24,.12);
-      box-shadow: 0 4px 10px rgba(0,0,0,.06);
-    }
-
-    .player-card.me {
-      background: rgba(222,250,222,.88);
-      outline: 2px solid rgba(61,124,72,.22);
-    }
-
-    .player-card.bot {
-      background: rgba(255,245,202,.84);
-      outline: 2px dashed rgba(120,90,10,.25);
-    }
-
-    .host-crown {
-      position: absolute;
-      top: -8px;
-      left: -4px;
-      font-size: 18px;
-      filter: drop-shadow(0 2px 2px rgba(0,0,0,.25));
-    }
-
-    .player-card .symbol {
-      grid-row: 1 / span 2;
-    }
-
-    .player-name {
-      font-weight: 1000;
-      color: #172317;
-      word-break: break-word;
-      font-size: 13px;
-      line-height: 1.05;
-      min-width: 0;
-    }
-
-    .score {
+      border-radius: 999px;
+      border: 2px solid rgba(24,35,24,.16);
+      background: white;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: fit-content;
-      gap: 4px;
-      padding: 3px 7px;
-      border-radius: 999px;
-      background: #fff2bd;
-      color: #604500;
       font-weight: 1000;
-      font-size: 12px;
-      margin-top: 3px;
+      box-shadow: 0 3px 8px rgba(0,0,0,.12);
+    }
+
+    .color-pick.selected,
+    .symbol-pick.selected {
+      outline: 4px solid rgba(241,191,54,.55);
+      border-color: #604500;
+    }
+
+    .symbol-pick {
+      color: var(--pick);
+      font-size: 24px;
     }
 
     .timer-box {
@@ -388,7 +369,7 @@
       gap: 5px;
       padding: 10px;
       border-radius: 16px;
-      background: rgba(18, 37, 18, .08);
+      background: rgba(18,37,18,.08);
       border: 1px solid rgba(24,35,24,.10);
     }
 
@@ -416,6 +397,94 @@
       text-align: center;
     }
 
+    .players-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+      gap: 7px;
+    }
+
+    .mini-player-card {
+      position: relative;
+      min-height: 56px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto;
+      column-gap: 6px;
+      align-items: center;
+      padding: 8px 7px;
+      border-radius: 15px;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(24,35,24,.12);
+      box-shadow: 0 4px 10px rgba(0,0,0,.06);
+    }
+
+    .mini-player-card.me {
+      background: rgba(222,250,222,.88);
+      outline: 2px solid rgba(61,124,72,.22);
+    }
+
+    .mini-player-card.bot {
+      background: rgba(255,245,202,.84);
+      outline: 2px dashed rgba(120,90,10,.25);
+    }
+
+    .host-crown {
+      position: absolute;
+      top: -8px;
+      left: -4px;
+      font-size: 18px;
+      filter: drop-shadow(0 2px 2px rgba(0,0,0,.25));
+      z-index: 3;
+    }
+
+    .symbol {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      font-size: 27px;
+      line-height: 1;
+      font-weight: 1000;
+      color: var(--sym);
+      text-shadow: 0 1px 0 rgba(255,255,255,.85), 0 3px 10px rgba(0,0,0,.22);
+      flex: 0 0 auto;
+    }
+
+    .symbol.big {
+      width: 42px;
+      height: 42px;
+      font-size: 40px;
+    }
+
+    .mini-player-card .symbol {
+      grid-row: 1 / span 2;
+    }
+
+    .player-name {
+      font-weight: 1000;
+      color: #172317;
+      word-break: break-word;
+      font-size: 13px;
+      line-height: 1.05;
+      min-width: 0;
+    }
+
+    .score {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      gap: 4px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: #fff2bd;
+      color: #604500;
+      font-weight: 1000;
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
     .vote-card {
       min-height: 92px;
       border: 1px solid rgba(24,35,24,.12);
@@ -435,20 +504,210 @@
       background: #fff8dd;
     }
 
-    .message {
-      margin: 0 0 8px;
-      padding: 8px 10px;
-      border-radius: 14px;
-      background: #fff7cf;
-      color: #4d3a04;
-      border: 1px solid rgba(160,125,20,.25);
-      font-weight: 900;
-      box-shadow: 0 4px 12px rgba(0,0,0,.10);
+    .art-stage {
+      overflow: hidden;
+      padding: 4px 0 0;
     }
 
-    .result-row,
+    .art-carousel {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 8px 18px 14px;
+      scrollbar-width: none;
+    }
+
+    .art-carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .art-player-card {
+      position: relative;
+      flex: 0 0 min(78vw, 440px);
+      height: min(72vh, 590px);
+      min-height: 440px;
+      scroll-snap-align: center;
+      border: 0;
+      border-radius: 26px;
+      padding: 0;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(241,191,54,.14), transparent 34%),
+        linear-gradient(135deg, #060a06, #11180f 45%, #241c10);
+      color: #f8df91;
+      box-shadow:
+        0 0 0 2px rgba(241,191,54,.82),
+        0 0 0 7px rgba(0,0,0,.65),
+        0 20px 45px rgba(0,0,0,.45);
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .art-player-card.selected {
+      box-shadow:
+        0 0 0 3px #f1bf36,
+        0 0 0 9px rgba(34,102,58,.9),
+        0 0 34px rgba(241,191,54,.55),
+        0 20px 45px rgba(0,0,0,.48);
+    }
+
+    .art-player-card.me {
+      box-shadow:
+        0 0 0 2px rgba(241,191,54,.82),
+        0 0 0 7px rgba(34,102,58,.70),
+        0 20px 45px rgba(0,0,0,.45);
+    }
+
+    .art-player-card::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 2px solid rgba(241,191,54,.72);
+      border-radius: 19px;
+      box-shadow: inset 0 0 0 1px rgba(241,191,54,.25);
+      pointer-events: none;
+    }
+
+    .art-player-card::after {
+      content: "";
+      position: absolute;
+      inset: 28px;
+      border: 1px solid rgba(241,191,54,.35);
+      border-radius: 14px;
+      background:
+        repeating-radial-gradient(circle at center, rgba(241,191,54,.10) 0 1px, transparent 1px 18px);
+      pointer-events: none;
+      opacity: .75;
+    }
+
+    .edge-name {
+      position: absolute;
+      z-index: 4;
+      font-family: Georgia, "Times New Roman", serif;
+      letter-spacing: 5px;
+      font-weight: 1000;
+      color: #f5e0a0;
+      text-transform: uppercase;
+      text-shadow: 0 3px 8px rgba(0,0,0,.9);
+      pointer-events: none;
+    }
+
+    .edge-name.top {
+      top: 35px;
+      left: 58px;
+      right: 58px;
+      font-size: clamp(28px, 8vw, 52px);
+      text-align: center;
+    }
+
+    .edge-name.bottom {
+      bottom: 35px;
+      left: 58px;
+      right: 58px;
+      font-size: clamp(28px, 8vw, 52px);
+      text-align: center;
+      transform: rotate(180deg);
+    }
+
+    .edge-name.left {
+      top: 130px;
+      bottom: 130px;
+      left: 24px;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: clamp(21px, 6vw, 38px);
+      text-align: center;
+    }
+
+    .edge-name.right {
+      top: 130px;
+      bottom: 130px;
+      right: 24px;
+      writing-mode: vertical-rl;
+      font-size: clamp(21px, 6vw, 38px);
+      text-align: center;
+    }
+
+    .art-symbol-wrap {
+      position: absolute;
+      z-index: 5;
+      inset: 26% 18%;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      border: 2px solid rgba(241,191,54,.38);
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,.06), transparent 48%),
+        radial-gradient(circle at center, rgba(241,191,54,.13), transparent 60%);
+    }
+
+    .art-symbol {
+      font-size: clamp(92px, 25vw, 180px);
+      color: var(--sym);
+      line-height: 1;
+      text-shadow:
+        0 2px 0 rgba(255,255,255,.22),
+        0 0 16px rgba(0,0,0,.55),
+        0 0 25px color-mix(in srgb, var(--sym) 60%, transparent);
+    }
+
+    .art-sub {
+      position: absolute;
+      z-index: 6;
+      left: 42px;
+      right: 42px;
+      bottom: 104px;
+      text-align: center;
+      color: rgba(255,255,255,.72);
+      font-weight: 900;
+      letter-spacing: 1px;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+
+    .art-host {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      z-index: 7;
+      font-size: 25px;
+      filter: drop-shadow(0 3px 3px rgba(0,0,0,.8));
+    }
+
+    .art-me {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      z-index: 7;
+      background: #fff2bd;
+      color: #604500;
+      border-radius: 999px;
+      font-weight: 1000;
+      font-size: 12px;
+      padding: 6px 9px;
+    }
+
+    .select-panel {
+      text-align: center;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.03)),
+        rgba(10,18,10,.86);
+      color: white;
+      border-color: rgba(241,191,54,.28);
+    }
+
+    .selected-name {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 24px;
+      color: #f9dd80;
+      font-weight: 1000;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .pay-item,
     .note-item,
-    .pay-item {
+    .result-row {
       padding: 9px;
       border-radius: 16px;
       background: rgba(255,255,255,.75);
@@ -490,7 +749,8 @@
     }
 
     @media (max-width: 720px) {
-      .two {
+      .two,
+      .mode-grid {
         grid-template-columns: 1fr;
       }
 
@@ -500,37 +760,26 @@
 
       .players-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 7px;
       }
 
       .title {
         font-size: 42px;
       }
 
-      .player-card {
-        min-height: 54px;
-        padding: 7px 6px;
-      }
-
-      .player-name {
-        font-size: 13px;
-      }
-
-      .symbol {
-        width: 26px;
-        height: 26px;
-        font-size: 25px;
-      }
-
-      .score {
-        font-size: 11px;
-        padding: 3px 6px;
+      .art-player-card {
+        flex-basis: 78vw;
+        height: 500px;
+        min-height: 500px;
       }
     }
 
     @media (max-width: 380px) {
       .players-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .art-player-card {
+        flex-basis: 82vw;
       }
     }
   </style>
@@ -540,13 +789,9 @@
   <div class="app">
     <div class="shell">
       <div class="hero">
-        <div class="top-row">
-          <div>
-            <div class="title">KORRUPTION</div>
-            <div class="subtitle">real-life deals · phone voting · shared scoreboard</div>
-          </div>
-          <div id="heroChips"></div>
-        </div>
+        <div class="title">KORRUPTION</div>
+        <div class="subtitle">digital deals · in-person cards · phone voting</div>
+        <div id="heroChips"></div>
       </div>
 
       <div id="topControls"></div>
@@ -562,33 +807,51 @@
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhud3duZ3Flbm52d2FqbGh2Y2xqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0NTIxMDIsImV4cCI6MjA5NjAyODEwMn0.dnrzfKp9xvJ7WXQojwTSa89_HU6r1d9-gtEtYY-dyIM";
 
     const STARTING_COINS = 20;
-    const ROUND_PAYOUTS = [0, 20, 25, 30, 35, 40, 50];
-    const VOTER_BONUS = 3;
     const MAX_ROUNDS = 6;
-    const TEST_BOT_NAMES = ["Viper", "Moxie", "Rook", "Hex", "Ivy", "Knox", "Jinx", "Ace", "Raven", "Slate", "Nova", "Cash", "Echo", "Rex", "Zed"];
+    const VOTER_BONUS = 3;
+    const ROUND_PAYOUTS = [0, 20, 25, 30, 35, 40, 50];
+
+    const STORAGE_KEY = "korruption_v3_player";
+    const MODE_KEY = "korruption_v3_setup_mode";
 
     const COLORS = [
       { name: "Red", hex: "#e34848" },
       { name: "Blue", hex: "#407ee8" },
       { name: "Green", hex: "#35a857" },
-      { name: "Yellow", hex: "#f0bf2f" }
+      { name: "Gold", hex: "#f1bf36" },
+      { name: "Purple", hex: "#8f4bd8" },
+      { name: "Silver", hex: "#c9c9c9" },
+      { name: "Emerald", hex: "#00a86b" },
+      { name: "Pink", hex: "#ff6fb1" },
+      { name: "Orange", hex: "#ff8c2b" },
+      { name: "Teal", hex: "#24c6b8" }
     ];
 
-    const SHAPES = [
-      { name: "Circle", mark: "●" },
-      { name: "Square", mark: "■" },
-      { name: "Triangle", mark: "▲" },
-      { name: "Star", mark: "★" }
+    const SYMBOLS = [
+      { name: "Star", mark: "★" },
+      { name: "Moon", mark: "☾" },
+      { name: "Crown", mark: "♛" },
+      { name: "Diamond", mark: "♦" },
+      { name: "Spade", mark: "♠" },
+      { name: "Club", mark: "♣" },
+      { name: "Heart", mark: "♥" },
+      { name: "Lightning", mark: "⚡" },
+      { name: "Sun", mark: "☀" },
+      { name: "Comet", mark: "✦" },
+      { name: "Spark", mark: "✧" },
+      { name: "Burst", mark: "✹" },
+      { name: "Bloom", mark: "✺" },
+      { name: "Gem", mark: "❖" },
+      { name: "Stone", mark: "◆" },
+      { name: "Flower", mark: "✿" },
+      { name: "Clover", mark: "☘" },
+      { name: "North Star", mark: "✵" },
+      { name: "Nova", mark: "✶" },
+      { name: "Aster", mark: "✷" }
     ];
 
-    const IDENTITY_DECK = COLORS.flatMap(color => SHAPES.map(shape => ({
-      color: color.name,
-      colorHex: color.hex,
-      shape: shape.name,
-      mark: shape.mark
-    })));
+    const TEST_BOT_NAMES = ["Viper", "Moxie", "Rook", "Hex", "Ivy", "Knox", "Jinx", "Ace", "Raven", "Slate", "Nova", "Cash", "Echo", "Rex", "Zed"];
 
-    const STORAGE_KEY = "korruption_v1_player";
     const configured = !SUPABASE_URL.includes("PASTE_") && !SUPABASE_ANON_KEY.includes("PASTE_");
 
     let db = null;
@@ -602,6 +865,9 @@
       notes: [],
       payments: [],
       me: loadLocalPlayer(),
+      setupMode: localStorage.getItem(MODE_KEY) || "",
+      pickColor: "Emerald",
+      pickSymbol: "Star",
       selectedVote: "",
       message: "",
       loading: false
@@ -625,23 +891,23 @@
     }
 
     function makeToken() {
-      if (window.crypto && window.crypto.randomUUID) {
-        return window.crypto.randomUUID();
-      }
+      if (window.crypto && window.crypto.randomUUID) return window.crypto.randomUUID();
       return "tok-" + Date.now() + "-" + Math.random().toString(16).slice(2);
     }
 
     function roomCode() {
       const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
       let code = "K";
-      for (let i = 0; i < 3; i++) {
-        code += chars[Math.floor(Math.random() * chars.length)];
-      }
+      for (let i = 0; i < 3; i += 1) code += chars[Math.floor(Math.random() * chars.length)];
       return code;
     }
 
     function normalizeRoomCode(value) {
       return String(value || "").trim().toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 8);
+    }
+
+    function modeTitle(mode) {
+      return mode === "in_person" ? "In-Person Game" : "Digital Game";
     }
 
     function money(value) {
@@ -650,6 +916,10 @@
 
     function getPayout(round) {
       return ROUND_PAYOUTS[round] || ROUND_PAYOUTS[ROUND_PAYOUTS.length - 1];
+    }
+
+    function startingScore(mode) {
+      return mode === "digital" ? STARTING_COINS : 0;
     }
 
     function loadLocalPlayer() {
@@ -682,9 +952,41 @@
     function renderMessage() {
       const holder = $("message");
       if (!holder) return;
-      holder.innerHTML = appState.message
-        ? `<div class="message">${esc(appState.message)}</div>`
-        : "";
+      holder.innerHTML = appState.message ? `<div class="message">${esc(appState.message)}</div>` : "";
+    }
+
+    function colorInfo(name) {
+      return COLORS.find(c => c.name === name || c.hex === name) || COLORS[0];
+    }
+
+    function symbolInfo(name) {
+      return SYMBOLS.find(s => s.name === name || s.mark === name) || SYMBOLS[0];
+    }
+
+    function identityFor(player) {
+      if (!player) {
+        return {
+          color: COLORS[0].name,
+          hex: COLORS[0].hex,
+          symbolName: SYMBOLS[0].name,
+          mark: SYMBOLS[0].mark
+        };
+      }
+
+      const color = colorInfo(player.color);
+      const symbol = symbolInfo(player.shape);
+
+      return {
+        color: color.name,
+        hex: color.hex,
+        symbolName: symbol.name,
+        mark: symbol.mark
+      };
+    }
+
+    function symbolHtml(player, big) {
+      const ident = identityFor(player);
+      return `<span class="symbol${big ? " big" : ""}" style="--sym:${esc(ident.hex)}">${esc(ident.mark)}</span>`;
     }
 
     function playerById(id) {
@@ -718,32 +1020,31 @@
       return !!(player && String(player.player_token || "").startsWith("bot-"));
     }
 
-    function identityFor(player) {
-      const color = COLORS.find(c => c.name === player.color) || COLORS[0];
-      const shape = SHAPES.find(s => s.name === player.shape) || SHAPES[0];
-      return {
-        color: color.name,
-        hex: color.hex,
-        shape: shape.name,
-        mark: shape.mark
-      };
-    }
-
-    function symbolHtml(player, big) {
-      if (!player) return "";
-      const ident = identityFor(player);
-      return `<span class="symbol${big ? " big" : ""}" style="--sym:${esc(ident.hex)}" title="${esc(ident.color + " " + ident.shape)}">${esc(ident.mark)}</span>`;
-    }
-
     function playerLabel(player) {
       if (!player) return "Unknown";
       const ident = identityFor(player);
-      return ident.color + " " + ident.shape + " · " + player.player_name;
+      return ident.color + " " + ident.symbolName + " · " + player.player_name;
     }
 
     function firstOpenIdentity(players) {
       const used = new Set(players.map(p => p.color + "|" + p.shape));
-      return IDENTITY_DECK.find(ident => !used.has(ident.color + "|" + ident.shape)) || null;
+
+      for (const color of COLORS) {
+        for (const symbol of SYMBOLS) {
+          if (!used.has(color.name + "|" + symbol.name)) {
+            return { color: color.name, shape: symbol.name };
+          }
+        }
+      }
+
+      return { color: COLORS[0].name, shape: SYMBOLS[0].name };
+    }
+
+    function pickedIdentity() {
+      return {
+        color: appState.pickColor,
+        shape: appState.pickSymbol
+      };
     }
 
     function nextBotName(players) {
@@ -756,7 +1057,7 @@
 
     function checkConfigured(show = true) {
       if (!configured || !db) {
-        if (show) setMessage("Add your Supabase URL and anon/public key inside index.html first.");
+        if (show) setMessage("Supabase is not connected in index.html.");
         return false;
       }
       return true;
@@ -764,22 +1065,19 @@
 
     function timerInfo() {
       if (!appState.room || !appState.room.timer_ends_at) {
-        return { active: false, label: "No timer", text: "--:--" };
+        return { label: "No timer", text: "--:--" };
       }
 
       const ms = Date.parse(appState.room.timer_ends_at) - Date.now();
       const label = appState.room.timer_label || "Timer";
 
-      if (ms <= 0) {
-        return { active: false, label: label, text: "DONE" };
-      }
+      if (ms <= 0) return { label: label, text: "DONE" };
 
       const total = Math.ceil(ms / 1000);
       const minutes = Math.floor(total / 60);
       const seconds = total % 60;
 
       return {
-        active: true,
         label: label,
         text: String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0")
       };
@@ -787,84 +1085,29 @@
 
     function tickTimers() {
       const info = timerInfo();
-      document.querySelectorAll("[data-timer-left]").forEach(el => {
-        el.textContent = info.text;
-      });
-      document.querySelectorAll("[data-timer-label]").forEach(el => {
-        el.textContent = info.label;
-      });
+      document.querySelectorAll("[data-timer-left]").forEach(el => el.textContent = info.text);
+      document.querySelectorAll("[data-timer-label]").forEach(el => el.textContent = info.label);
     }
 
-    async function startTimer(label, seconds, alsoStatus) {
-      if (!amHost()) return;
-
-      const ends = new Date(Date.now() + seconds * 1000).toISOString();
-
-      const update = {
-        timer_label: label,
-        timer_ends_at: ends,
-        timer_duration_seconds: seconds
-      };
-
-      if (alsoStatus) {
-        update.status = alsoStatus;
-      }
-
-      const res = await db
-        .from("korr_rooms")
-        .update(update)
-        .eq("room_code", appState.room.room_code);
-
-      if (res.error) {
-        setMessage("Timer error: " + res.error.message);
-        return;
-      }
-
-      setMessage(label + " started.");
-      await loadAll();
+    function chooseMode(mode) {
+      appState.setupMode = mode;
+      localStorage.setItem(MODE_KEY, mode);
+      setMessage("");
+      render();
     }
 
-    async function clearTimer() {
-      if (!amHost()) return;
-
-      const res = await db
-        .from("korr_rooms")
-        .update({
-          timer_label: null,
-          timer_ends_at: null,
-          timer_duration_seconds: null
-        })
-        .eq("room_code", appState.room.room_code);
-
-      if (res.error) {
-        setMessage("Timer error: " + res.error.message);
-        return;
-      }
-
-      setMessage("Timer cleared.");
-      await loadAll();
+    function backToModeChoice() {
+      appState.setupMode = "";
+      localStorage.removeItem(MODE_KEY);
+      setMessage("");
+      render();
     }
 
-    async function createRoom() {
+    async function createRoom(mode) {
       try {
-        setMessage("Creating room...");
-
-        if (!configured) {
-          setMessage("Supabase URL/key are missing in index.html.");
-          return;
-        }
-
-        if (!window.supabase) {
-          setMessage("Supabase script did not load. Check internet or CDN script.");
-          return;
-        }
-
-        if (!db) {
-          db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        }
+        if (!checkConfigured()) return;
 
         const name = ($("createName")?.value || "").trim();
-
         if (!name) {
           setMessage("Enter your name first.");
           return;
@@ -872,12 +1115,16 @@
 
         const hostToken = makeToken();
         const playerToken = hostToken;
+        const useMode = mode || appState.setupMode || "digital";
+        const ident = useMode === "in_person" ? pickedIdentity() : firstOpenIdentity([]);
 
         let code = "";
         let room = null;
         let lastError = null;
 
-        for (let tries = 0; tries < 8; tries++) {
+        setMessage("Creating room...");
+
+        for (let tries = 0; tries < 8; tries += 1) {
           code = roomCode();
 
           const res = await db
@@ -888,6 +1135,7 @@
               status: "lobby",
               round_number: 1,
               max_rounds: MAX_ROUNDS,
+              game_mode: useMode,
               timer_label: null,
               timer_ends_at: null,
               timer_duration_seconds: null
@@ -901,15 +1149,12 @@
           }
 
           lastError = res.error;
-          console.log("Create room error", res.error);
         }
 
         if (!room) {
           setMessage("Room table error: " + (lastError ? lastError.message : "unknown error"));
           return;
         }
-
-        const ident = IDENTITY_DECK[0];
 
         const playerRes = await db
           .from("korr_players")
@@ -919,7 +1164,7 @@
             player_token: playerToken,
             color: ident.color,
             shape: ident.shape,
-            score: STARTING_COINS
+            score: startingScore(useMode)
           })
           .select()
           .single();
@@ -941,7 +1186,6 @@
         await loadAll();
         subscribeRoom();
       } catch (err) {
-        console.log(err);
         setMessage("Create room crashed: " + (err && err.message ? err.message : String(err)));
       }
     }
@@ -973,6 +1217,8 @@
         return;
       }
 
+      const roomMode = roomRes.data.game_mode || appState.setupMode || "digital";
+
       const playersRes = await db
         .from("korr_players")
         .select("*")
@@ -984,12 +1230,9 @@
         return;
       }
 
-      const ident = firstOpenIdentity(playersRes.data || []);
-
-      if (!ident) {
-        setMessage("Room is full. Max is 16 players.");
-        return;
-      }
+      const ident = roomMode === "in_person"
+        ? pickedIdentity()
+        : firstOpenIdentity(playersRes.data || []);
 
       const playerToken = makeToken();
 
@@ -1001,7 +1244,7 @@
           player_token: playerToken,
           color: ident.color,
           shape: ident.shape,
-          score: STARTING_COINS
+          score: startingScore(roomMode)
         })
         .select()
         .single();
@@ -1060,6 +1303,7 @@
       }
 
       appState.room = roomRes.data;
+      if (!appState.room.game_mode) appState.room.game_mode = "digital";
 
       const playersRes = await db
         .from("korr_players")
@@ -1067,9 +1311,7 @@
         .eq("room_code", code)
         .order("joined_at", { ascending: true });
 
-      if (!playersRes.error) {
-        appState.players = playersRes.data || [];
-      }
+      if (!playersRes.error) appState.players = playersRes.data || [];
 
       const meStillExists = appState.players.some(p => p.id === appState.me.playerId);
 
@@ -1092,9 +1334,7 @@
         .eq("room_code", code)
         .eq("round_number", appState.room.round_number);
 
-      if (!votesRes.error) {
-        appState.votes = votesRes.data || [];
-      }
+      if (!votesRes.error) appState.votes = votesRes.data || [];
 
       const notesRes = await db
         .from("korr_deal_notes")
@@ -1103,9 +1343,7 @@
         .eq("player_id", appState.me.playerId)
         .order("created_at", { ascending: false });
 
-      if (!notesRes.error) {
-        appState.notes = notesRes.data || [];
-      }
+      if (!notesRes.error) appState.notes = notesRes.data || [];
 
       const paymentsRes = await db
         .from("korr_payments")
@@ -1114,9 +1352,7 @@
         .order("created_at", { ascending: false })
         .limit(40);
 
-      if (!paymentsRes.error) {
-        appState.payments = paymentsRes.data || [];
-      }
+      if (!paymentsRes.error) appState.payments = paymentsRes.data || [];
 
       const myVote = appState.votes.find(v => v.voter_player_id === appState.me.playerId);
       appState.selectedVote = myVote ? myVote.voted_for_player_id : "";
@@ -1150,22 +1386,65 @@
         .subscribe();
     }
 
+    async function startTimer(label, seconds, status) {
+      if (!amHost()) return;
+
+      const ends = new Date(Date.now() + seconds * 1000).toISOString();
+
+      const update = {
+        timer_label: label,
+        timer_ends_at: ends,
+        timer_duration_seconds: seconds
+      };
+
+      if (status) update.status = status;
+
+      const res = await db
+        .from("korr_rooms")
+        .update(update)
+        .eq("room_code", appState.room.room_code);
+
+      if (res.error) {
+        setMessage("Timer error: " + res.error.message);
+        return;
+      }
+
+      setMessage(label + " started.");
+      await loadAll();
+    }
+
+    async function clearTimer() {
+      if (!amHost()) return;
+
+      const res = await db
+        .from("korr_rooms")
+        .update({
+          timer_label: null,
+          timer_ends_at: null,
+          timer_duration_seconds: null
+        })
+        .eq("room_code", appState.room.room_code);
+
+      if (res.error) {
+        setMessage("Timer error: " + res.error.message);
+        return;
+      }
+
+      setMessage("Timer cleared.");
+      await loadAll();
+    }
+
     async function addTestBot() {
       if (!amHost()) {
         setMessage("Only the host can add test bots.");
         return;
       }
 
+      const mode = appState.room.game_mode || "digital";
       const ident = firstOpenIdentity(appState.players);
-
-      if (!ident) {
-        setMessage("Room is full. Max is 16 players.");
-        return;
-      }
-
       const name = nextBotName(appState.players);
 
-      const botRes = await db
+      const res = await db
         .from("korr_players")
         .insert({
           room_code: appState.room.room_code,
@@ -1173,13 +1452,13 @@
           player_token: "bot-" + makeToken(),
           color: ident.color,
           shape: ident.shape,
-          score: STARTING_COINS
+          score: startingScore(mode)
         })
         .select()
         .single();
 
-      if (botRes.error) {
-        setMessage("Bot error: " + botRes.error.message);
+      if (res.error) {
+        setMessage("Bot error: " + res.error.message);
         return;
       }
 
@@ -1210,7 +1489,6 @@
       bots.forEach(bot => {
         const choices = appState.players.filter(p => p.id !== bot.id);
         if (!choices.length) return;
-
         const picked = choices[Math.floor(Math.random() * choices.length)];
 
         rows.push({
@@ -1272,8 +1550,26 @@
       await loadAll();
     }
 
+    function selectVoteCandidate(playerId) {
+      appState.selectedVote = playerId;
+      render();
+    }
+
+    async function submitSelectedVote() {
+      if (!appState.selectedVote) {
+        setMessage("Tap a player card first.");
+        return;
+      }
+      await submitVote(appState.selectedVote);
+    }
+
     async function submitVote(playerId) {
       if (!appState.room || !appState.me) return;
+
+      if (appState.room.status !== "voting") {
+        setMessage("Voting is not open yet.");
+        return;
+      }
 
       if (playerId === appState.me.playerId) {
         setMessage("You cannot vote for yourself.");
@@ -1307,6 +1603,7 @@
       await loadAll();
 
       const room = appState.room;
+      const mode = room.game_mode || "digital";
       const votes = appState.votes;
       const players = appState.players;
 
@@ -1326,9 +1623,14 @@
       });
 
       const winnerIds = Object.keys(counts).filter(id => counts[id] === max);
-      const payoutEach = Math.floor(getPayout(room.round_number) / Math.max(1, winnerIds.length));
-      const deltas = {};
 
+      const payoutEach = mode === "in_person"
+        ? 1
+        : Math.floor(getPayout(room.round_number) / Math.max(1, winnerIds.length));
+
+      const voterBonus = mode === "in_person" ? 0 : VOTER_BONUS;
+
+      const deltas = {};
       players.forEach(p => {
         deltas[p.id] = 0;
       });
@@ -1337,11 +1639,13 @@
         deltas[id] += payoutEach;
       });
 
-      votes.forEach(v => {
-        if (winnerIds.includes(v.voted_for_player_id) && !winnerIds.includes(v.voter_player_id)) {
-          deltas[v.voter_player_id] += VOTER_BONUS;
-        }
-      });
+      if (voterBonus > 0) {
+        votes.forEach(v => {
+          if (winnerIds.includes(v.voted_for_player_id) && !winnerIds.includes(v.voter_player_id)) {
+            deltas[v.voter_player_id] += voterBonus;
+          }
+        });
+      }
 
       for (const p of players) {
         const scoreRes = await db
@@ -1358,11 +1662,12 @@
       }
 
       const result = {
+        mode: mode,
         round: room.round_number,
         counts: counts,
         winnerIds: winnerIds,
         payoutEach: payoutEach,
-        voterBonus: VOTER_BONUS,
+        voterBonus: voterBonus,
         deltas: deltas,
         scoredAt: new Date().toISOString()
       };
@@ -1439,23 +1744,27 @@
         return;
       }
 
-      setMessage("Round " + next + " deal time started.");
+      setMessage("Round " + next + " started.");
       await loadAll();
     }
 
     async function resetGame() {
       if (!amHost()) return;
 
-      if (!confirm("Reset scores, votes, payments, and notes for this room?")) return;
+      if (!confirm("Reset this room?")) return;
 
       const code = appState.room.room_code;
+      const mode = appState.room.game_mode || "digital";
 
       await db.from("korr_votes").delete().eq("room_code", code);
       await db.from("korr_deal_notes").delete().eq("room_code", code);
       await db.from("korr_payments").delete().eq("room_code", code);
 
       for (const p of appState.players) {
-        await db.from("korr_players").update({ score: STARTING_COINS }).eq("id", p.id);
+        await db
+          .from("korr_players")
+          .update({ score: startingScore(mode) })
+          .eq("id", p.id);
       }
 
       await db
@@ -1501,24 +1810,13 @@
         return;
       }
 
-      const fromScore = Number(me.score || 0) - amount;
-      const toScore = Number(to.score || 0) + amount;
-
-      const fromRes = await db
-        .from("korr_players")
-        .update({ score: fromScore })
-        .eq("id", me.id);
-
+      const fromRes = await db.from("korr_players").update({ score: Number(me.score || 0) - amount }).eq("id", me.id);
       if (fromRes.error) {
         setMessage("Pay error: " + fromRes.error.message);
         return;
       }
 
-      const toRes = await db
-        .from("korr_players")
-        .update({ score: toScore })
-        .eq("id", to.id);
-
+      const toRes = await db.from("korr_players").update({ score: Number(to.score || 0) + amount }).eq("id", to.id);
       if (toRes.error) {
         setMessage("Pay error: " + toRes.error.message);
         return;
@@ -1536,7 +1834,7 @@
         });
 
       if (payRes.error) {
-        setMessage("Payment saved scores, but payment log failed: " + payRes.error.message);
+        setMessage("Payment log error: " + payRes.error.message);
         return;
       }
 
@@ -1640,6 +1938,7 @@
 
       holder.innerHTML = `
         <div class="room-chips">
+          <div class="room-chip">${esc(modeTitle(appState.room.game_mode))}</div>
           <div class="room-chip">Room ${esc(appState.room.room_code)}</div>
           <div class="room-chip">Round ${esc(appState.room.round_number)}/${esc(appState.room.max_rounds)}</div>
           <div class="room-chip">${esc(appState.room.status)}</div>
@@ -1658,35 +1957,36 @@
 
       const status = appState.room.status;
       const info = timerInfo();
-      let buttons = "";
+
+      let hostButtons = "";
 
       if (amHost()) {
-        buttons += `
+        hostButtons += `
           <button class="btn gold" id="dealTimerBtn">5:00 Deals</button>
           <button class="btn gold" id="voteTimerBtn">0:30 Vote</button>
           <button class="btn light" id="clearTimerBtn">Clear Timer</button>
         `;
 
         if (status === "lobby" || status === "deals") {
-          buttons += `
+          hostButtons += `
             <button class="btn" id="startVotingBtn">Start Voting</button>
             <button class="btn light" id="addBotBtn">+ Test Bot</button>
           `;
         } else if (status === "voting") {
-          buttons += `
+          hostButtons += `
             <button class="btn" id="revealBtn">Reveal + Score</button>
             <button class="btn light" id="botVotesBtn">Bot Votes</button>
           `;
         } else if (status === "results") {
-          buttons += `
+          hostButtons += `
             <button class="btn" id="nextRoundBtn">${appState.room.round_number >= appState.room.max_rounds ? "Final Results" : "Next Round"}</button>
           `;
         } else if (status === "final") {
-          buttons += `<button class="btn" id="resetBtn">Reset Game</button>`;
+          hostButtons += `<button class="btn" id="resetBtn">Reset Game</button>`;
         }
 
         if (status !== "final") {
-          buttons += ` <button class="btn light" id="resetBtn">Reset</button>`;
+          hostButtons += `<button class="btn light" id="resetBtn">Reset</button>`;
         }
       }
 
@@ -1696,7 +1996,7 @@
             <div class="timer-main">
               <div>
                 <div class="timer-label" data-timer-label>${esc(info.label)}</div>
-                <div class="muted">Host controls and shared countdown</div>
+                <div class="muted">Shared room controls</div>
               </div>
               <div class="timer-time" data-timer-left>${esc(info.text)}</div>
             </div>
@@ -1705,13 +2005,20 @@
           <br>
 
           <div class="row">
+            <span class="badge">${esc(modeTitle(appState.room.game_mode))}</span>
             <span class="badge">Round ${esc(appState.room.round_number)}/${esc(appState.room.max_rounds)}</span>
             <span class="badge gold">${esc(status)}</span>
             <span class="badge">${appState.votes.length}/${appState.players.length} votes</span>
             ${amHost() ? '<span class="badge gold">HOST</span>' : ""}
           </div>
 
-          ${buttons ? `<br><div class="row">${buttons}</div>` : ""}
+          <br>
+
+          <div class="row">
+            <button class="btn small gold" id="copyRoomBtn">Copy Room</button>
+            <button class="btn small red" id="leaveBtn">Leave</button>
+            ${hostButtons}
+          </div>
         </div>
       `;
     }
@@ -1735,20 +2042,63 @@
       }
 
       if (!appState.me || !appState.room) {
-        root.innerHTML = renderSetup();
-        wireSetup();
+        if (!appState.setupMode) {
+          root.innerHTML = renderModeChoice();
+          wireModeChoice();
+        } else {
+          root.innerHTML = renderSetup(appState.setupMode);
+          wireSetup();
+        }
         return;
       }
 
-      root.innerHTML = renderGame();
+      if ((appState.room.game_mode || "digital") === "in_person") {
+        root.innerHTML = renderInPersonGame();
+      } else {
+        root.innerHTML = renderDigitalGame();
+      }
+
       wireGame();
     }
 
-    function renderSetup() {
+    function renderModeChoice() {
+      return `
+        <div class="mode-grid">
+          <div class="mode-card">
+            <h2>Digital Game</h2>
+            <p>Full phone game with timers, payments, notes, voting, results, and scoreboard.</p>
+            <button class="btn gold full" data-mode-choice="digital">Open Digital Game</button>
+          </div>
+
+          <div class="mode-card">
+            <h2>In-Person Game</h2>
+            <p>Big art-deco player cards. Players choose a color and symbol, swipe cards, then vote.</p>
+            <button class="btn gold full" data-mode-choice="in_person">Open In-Person Game</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">Pick how you want to play</div>
+          <div class="muted">Both versions can create rooms. Everyone joins the same room code.</div>
+        </div>
+      `;
+    }
+
+    function renderSetup(mode) {
       const params = new URLSearchParams(location.search);
       const urlRoom = normalizeRoomCode(params.get("room") || "");
+      const isInPerson = mode === "in_person";
 
       return `
+        <div class="card dark">
+          <div class="row">
+            <button class="btn small light" id="backModeBtn">← Back</button>
+            <span class="badge gold">${esc(modeTitle(mode))}</span>
+          </div>
+        </div>
+
+        ${isInPerson ? renderPickers() : ""}
+
         <div class="two">
           <div class="card">
             <div class="section-title">Create room</div>
@@ -1758,7 +2108,7 @@
               <input id="createName" placeholder="Beverly" autocomplete="name">
             </label>
             <br>
-            <button class="btn gold full" id="createRoomBtn">Create Room</button>
+            <button class="btn gold full" id="createRoomBtn">Create ${esc(modeTitle(mode))}</button>
           </div>
 
           <div class="card">
@@ -1778,28 +2128,80 @@
         </div>
 
         <div class="card dark">
-          <div class="section-title">How this app works</div>
-          <ol class="rules-list">
-            <li>Each player starts with ${money(STARTING_COINS)}.</li>
-            <li>Deals are made out loud, in person.</li>
-            <li>The app handles timers, votes, scores, payments, and private notes.</li>
-            <li>Each player keeps the same name, color, and symbol all game.</li>
-            <li>Testing alone: create a room, add test bots, start voting.</li>
-          </ol>
+          <div class="section-title">How this version works</div>
+          ${isInPerson ? `
+            <ol class="rules-list">
+              <li>Pick your card color and symbol.</li>
+              <li>Join the room.</li>
+              <li>Swipe through the big cards to choose who to vote for.</li>
+              <li>Tap a card, then hit Vote.</li>
+            </ol>
+          ` : `
+            <ol class="rules-list">
+              <li>Everyone starts with ${money(STARTING_COINS)}.</li>
+              <li>Use timers, payments, deal notes, voting, and scoring.</li>
+              <li>Host controls the round.</li>
+            </ol>
+          `}
         </div>
       `;
     }
 
-    function renderGame() {
-      return renderPlayersCard() +
-        renderVotingCard() +
+    function renderPickers() {
+      return `
+        <div class="card">
+          <div class="section-title">Choose your card</div>
+          <div class="muted">Pick one color and one symbol. This becomes your big player card.</div>
+          <br>
+
+          <div class="picker-wrap">
+            <div>
+              <div class="field">Color</div>
+              <div class="picker-row">
+                ${COLORS.map(c => `
+                  <button class="color-pick ${appState.pickColor === c.name ? "selected" : ""}"
+                    data-color-choice="${esc(c.name)}"
+                    style="background:${esc(c.hex)}"
+                    title="${esc(c.name)}"></button>
+                `).join("")}
+              </div>
+            </div>
+
+            <div>
+              <div class="field">Symbol</div>
+              <div class="picker-row">
+                ${SYMBOLS.map(s => {
+                  const color = colorInfo(appState.pickColor);
+                  return `
+                    <button class="symbol-pick ${appState.pickSymbol === s.name ? "selected" : ""}"
+                      data-symbol-choice="${esc(s.name)}"
+                      style="--pick:${esc(color.hex)}"
+                      title="${esc(s.name)}">${esc(s.mark)}</button>
+                  `;
+                }).join("")}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderDigitalGame() {
+      return renderPlayersMiniCard() +
+        renderDigitalVotingCard() +
         renderPayCard() +
         renderResultsCard() +
         renderNotesCard() +
-        renderRulesCard();
+        renderDigitalRules();
     }
 
-    function renderPlayersCard() {
+    function renderInPersonGame() {
+      return renderInPersonCards() +
+        renderResultsCard() +
+        renderInPersonRules();
+    }
+
+    function renderPlayersMiniCard() {
       const sorted = appState.players.slice().sort((a, b) => Number(b.score || 0) - Number(a.score || 0));
 
       return `
@@ -1807,7 +2209,7 @@
           <div class="section-title">Players</div>
           <div class="players-grid">
             ${sorted.map(p => {
-              const classes = ["player-card"];
+              const classes = ["mini-player-card"];
               if (appState.me && p.id === appState.me.playerId) classes.push("me");
               if (isTestBot(p)) classes.push("bot");
 
@@ -1825,7 +2227,62 @@
       `;
     }
 
-    function renderVotingCard() {
+    function renderInPersonCards() {
+      const selected = playerById(appState.selectedVote);
+      const myVote = appState.votes.find(v => v.voter_player_id === appState.me.playerId);
+      const chosen = selected || (myVote ? playerById(myVote.voted_for_player_id) : null);
+
+      return `
+        <div class="card dark">
+          <div class="section-title">Swipe Player Cards</div>
+          <div class="muted">Tap a card to choose that player. Then hit Vote when voting is open.</div>
+        </div>
+
+        <div class="art-stage">
+          <div class="art-carousel">
+            ${appState.players.map(p => renderArtCard(p)).join("")}
+          </div>
+        </div>
+
+        <div class="card select-panel">
+          <div class="muted">Selected player</div>
+          <div class="selected-name">${chosen ? esc(chosen.player_name) : "None"}</div>
+          <br>
+          <button class="btn gold full" id="confirmVoteBtn">${myVote ? "Change Vote" : "Vote"}</button>
+          <br><br>
+          ${myVote ? '<span class="badge gold">Vote saved</span>' : '<span class="badge red">No vote saved yet</span>'}
+        </div>
+      `;
+    }
+
+    function renderArtCard(p) {
+      const ident = identityFor(p);
+      const safeName = String(p.player_name || "Player").toUpperCase();
+      const classes = ["art-player-card"];
+
+      if (appState.me && p.id === appState.me.playerId) classes.push("me");
+      if (appState.selectedVote === p.id) classes.push("selected");
+
+      return `
+        <button class="${classes.join(" ")}" data-card-vote="${esc(p.id)}">
+          ${isHostPlayer(p) ? '<div class="art-host">👑</div>' : ""}
+          ${appState.me && p.id === appState.me.playerId ? '<div class="art-me">YOU</div>' : ""}
+
+          <div class="edge-name top">${esc(safeName)}</div>
+          <div class="edge-name bottom">${esc(safeName)}</div>
+          <div class="edge-name left">${esc(safeName)}</div>
+          <div class="edge-name right">${esc(safeName)}</div>
+
+          <div class="art-symbol-wrap">
+            <div class="art-symbol" style="--sym:${esc(ident.hex)}">${esc(ident.mark)}</div>
+          </div>
+
+          <div class="art-sub">${esc(ident.color)} · ${esc(ident.symbolName)} · Score ${esc(p.score || 0)}</div>
+        </button>
+      `;
+    }
+
+    function renderDigitalVotingCard() {
       if (appState.room.status !== "voting") return "";
 
       const voteCards = appState.players
@@ -1835,11 +2292,10 @@
           const ident = identityFor(p);
 
           return `
-            <button class="vote-card${selected ? " selected" : ""}" data-vote="${esc(p.id)}">
+            <button class="vote-card ${selected ? "selected" : ""}" data-vote="${esc(p.id)}">
               ${symbolHtml(p, true)}
               <div class="player-name">${esc(p.player_name)}</div>
-              <div class="muted">${esc(ident.color + " " + ident.shape)}</div>
-              ${isTestBot(p) ? '<span class="badge gold">BOT</span>' : ""}
+              <div class="muted">${esc(ident.color + " " + ident.symbolName)}</div>
             </button>
           `;
         }).join("");
@@ -1849,7 +2305,7 @@
       return `
         <div class="card">
           <div class="section-title">Vote</div>
-          <div class="muted">Tap who you are voting for. You can change it until the host reveals.</div>
+          <div class="muted">Tap who you are voting for.</div>
           <br>
           <div class="grid">${voteCards}</div>
           <br>
@@ -1893,7 +2349,7 @@
       return `
         <div class="card">
           <div class="section-title">Pay Player</div>
-          <div class="muted">Use this after an in-person deal. Your coins go down, their coins go up.</div>
+          <div class="muted">Use this after a deal. Your coins go down, their coins go up.</div>
           <br>
 
           <div class="two">
@@ -1941,29 +2397,23 @@
       const counts = result.counts || {};
       const winnerIds = result.winnerIds || [];
       const deltas = result.deltas || {};
+      const isInPerson = (appState.room.game_mode || "digital") === "in_person";
+
+      const winnerNames = winnerIds.map(id => {
+        const p = playerById(id);
+        return p ? `${symbolHtml(p, false)} <b>${esc(p.player_name)}</b>` : "";
+      }).join(" ");
 
       const voteRows = appState.players
         .slice()
         .sort((a, b) => Number(counts[b.id] || 0) - Number(counts[a.id] || 0))
-        .map(p => {
-          const ident = identityFor(p);
-
-          return `
-            <div class="result-row">
-              ${symbolHtml(p, false)}
-              <div>
-                <b>${esc(p.player_name)}</b>
-                <div class="muted">${esc(ident.color + " " + ident.shape)}</div>
-              </div>
-              <div class="badge">${Number(counts[p.id] || 0)} ✓</div>
-            </div>
-          `;
-        }).join("");
-
-      const winnerNames = winnerIds.map(id => {
-        const p = playerById(id);
-        return p ? `${symbolHtml(p, false)} ${esc(p.player_name)}` : "";
-      }).join(" ");
+        .map(p => `
+          <div class="result-row">
+            ${symbolHtml(p, false)}
+            <div><b>${esc(p.player_name)}</b></div>
+            <div class="badge">${Number(counts[p.id] || 0)} ✓</div>
+          </div>
+        `).join("");
 
       const deltaRows = appState.players
         .filter(p => Number(deltas[p.id] || 0) > 0)
@@ -1971,7 +2421,7 @@
           <div class="result-row">
             ${symbolHtml(p, false)}
             <div><b>${esc(p.player_name)}</b></div>
-            <div class="badge gold">+${money(deltas[p.id])}</div>
+            <div class="badge gold">+${isInPerson ? esc(deltas[p.id]) : money(deltas[p.id])}</div>
           </div>
         `).join("");
 
@@ -1983,7 +2433,11 @@
             <div class="section-title">🏆 Winner</div>
             <div class="row">${winnerNames}</div>
             <br>
-            <div class="muted">Round payout: ${money(result.payoutEach || 0)} · correct voter bonus: ${money(result.voterBonus || 0)}</div>
+            <div class="muted">
+              ${isInPerson
+                ? "Winner gets +1 point."
+                : "Round payout: " + money(result.payoutEach || 0) + " · correct voter bonus: " + money(result.voterBonus || 0)}
+            </div>
           </div>
 
           <div class="section-title">Votes</div>
@@ -2050,30 +2504,65 @@
       `;
     }
 
-    function renderRulesCard() {
+    function renderDigitalRules() {
       return `
         <div class="card dark">
-          <div class="section-title">Quick Rules</div>
+          <div class="section-title">Digital Rules</div>
           <ol class="rules-list">
             <li>Everyone starts with ${money(STARTING_COINS)}.</li>
             <li>Host starts a 5-minute deal timer.</li>
-            <li>Players talk and make deals in person.</li>
-            <li>Players can pay coins in the app.</li>
+            <li>Players make deals, pay coins, and save notes.</li>
             <li>Host starts voting. Voting timer is 30 seconds.</li>
             <li>Round winner gets the round payout.</li>
-            <li>Anyone who voted for the winner gets ${money(VOTER_BONUS)}.</li>
-            <li>After 6 rounds, highest score wins.</li>
+            <li>Correct voters get ${money(VOTER_BONUS)}.</li>
           </ol>
         </div>
       `;
     }
 
+    function renderInPersonRules() {
+      return `
+        <div class="card dark">
+          <div class="section-title">In-Person Rules</div>
+          <ol class="rules-list">
+            <li>Swipe the big cards to browse players.</li>
+            <li>Tap the card you want to vote for.</li>
+            <li>Hit Vote when voting is open.</li>
+            <li>Winner gets +1 point.</li>
+            <li>Most points at the end wins.</li>
+          </ol>
+        </div>
+      `;
+    }
+
+    function wireModeChoice() {
+      document.querySelectorAll("[data-mode-choice]").forEach(btn => {
+        btn.addEventListener("click", () => chooseMode(btn.getAttribute("data-mode-choice")));
+      });
+    }
+
     function wireSetup() {
+      const backBtn = $("backModeBtn");
       const createBtn = $("createRoomBtn");
       const joinBtn = $("joinRoomBtn");
 
-      if (createBtn) createBtn.addEventListener("click", createRoom);
+      if (backBtn) backBtn.addEventListener("click", backToModeChoice);
+      if (createBtn) createBtn.addEventListener("click", () => createRoom(appState.setupMode));
       if (joinBtn) joinBtn.addEventListener("click", joinRoom);
+
+      document.querySelectorAll("[data-color-choice]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          appState.pickColor = btn.getAttribute("data-color-choice");
+          render();
+        });
+      });
+
+      document.querySelectorAll("[data-symbol-choice]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          appState.pickSymbol = btn.getAttribute("data-symbol-choice");
+          render();
+        });
+      });
     }
 
     function wireGame() {
@@ -2090,7 +2579,8 @@
         ["saveNoteBtn", saveNote],
         ["payBtn", payPlayer],
         ["addBotBtn", addTestBot],
-        ["botVotesBtn", addBotVotes]
+        ["botVotesBtn", addBotVotes],
+        ["confirmVoteBtn", submitSelectedVote]
       ];
 
       pairs.forEach(pair => {
@@ -2100,6 +2590,10 @@
 
       document.querySelectorAll("[data-vote]").forEach(btn => {
         btn.addEventListener("click", () => submitVote(btn.getAttribute("data-vote")));
+      });
+
+      document.querySelectorAll("[data-card-vote]").forEach(btn => {
+        btn.addEventListener("click", () => selectVoteCandidate(btn.getAttribute("data-card-vote")));
       });
 
       document.querySelectorAll("[data-delete-note]").forEach(btn => {
@@ -2116,12 +2610,18 @@
           return;
         }
 
+        const params = new URLSearchParams(location.search);
+        const modeFromUrl = params.get("mode");
+
+        if (!appState.setupMode && (modeFromUrl === "digital" || modeFromUrl === "in_person")) {
+          appState.setupMode = modeFromUrl;
+        }
+
         if (appState.me && appState.me.roomCode) {
           await loadAll();
           subscribeRoom();
         }
       } catch (err) {
-        console.log("Boot error", err);
         setMessage("App error: " + (err && err.message ? err.message : String(err)));
       }
     }

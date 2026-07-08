@@ -1731,51 +1731,59 @@
       await loadAll();
     }
 
-    async function addBotVotes() {
-      if (!amHost()) {
-        setMessage("Only the host can add bot votes.");
-        return;
-      }
+    async function addBotVotes(auto = false) {
+  if (!amHost()) {
+    if (!auto) setMessage("Only the host can add bot votes.");
+    return;
+  }
 
-      if (!voteWindowOpen()) {
-        setMessage("Voting is closed.");
-        return;
-      }
+  if (!voteWindowOpen()) {
+    if (!auto) setMessage("Voting is closed.");
+    return;
+  }
 
-      const bots = appState.players.filter(isTestBot);
+  const bots = appState.players.filter(isTestBot);
 
-      if (!bots.length) {
-        setMessage("Add test bots first.");
-        return;
-      }
+  if (!bots.length) {
+    if (!auto) setMessage("Add test bots first.");
+    return;
+  }
 
-      const rows = [];
+  const rows = [];
 
-      bots.forEach(bot => {
-        const choices = appState.players.filter(p => p.id !== bot.id);
-        if (!choices.length) return;
-        const picked = choices[Math.floor(Math.random() * choices.length)];
+  bots.forEach(bot => {
+    const choices = appState.players.filter(p => p.id !== bot.id);
+    if (!choices.length) return;
 
-        rows.push({
-          room_code: appState.room.room_code,
-          round_number: appState.room.round_number,
-          voter_player_id: bot.id,
-          voted_for_player_id: picked.id
-        });
-      });
+    const picked = choices[Math.floor(Math.random() * choices.length)];
 
-      const voteRes = await db
-        .from("korr_votes")
-        .upsert(rows, { onConflict: "room_code,round_number,voter_player_id" });
+    rows.push({
+      room_code: appState.room.room_code,
+      round_number: appState.room.round_number,
+      voter_player_id: bot.id,
+      voted_for_player_id: picked.id
+    });
+  });
 
-      if (voteRes.error) {
-        setMessage("Bot vote error: " + voteRes.error.message);
-        return;
-      }
+  if (!rows.length) return;
 
-      setMessage("Bot votes added.");
-      await loadAll();
-    }
+  const voteRes = await db
+    .from("korr_votes")
+    .upsert(rows, { onConflict: "room_code,round_number,voter_player_id" });
+
+  if (voteRes.error) {
+    setMessage("Bot vote error: " + voteRes.error.message);
+    return;
+  }
+
+  if (auto) {
+    setMessage("Voting started. Bots voted automatically.");
+  } else {
+    setMessage("Bot votes added.");
+  }
+
+  await loadAll();
+}
 
     async function startVoting() {
       if (!amHost()) return;
@@ -1823,6 +1831,7 @@
 
       setMessage("Voting started.");
       await loadAll();
+      await addBotVotes(true);
     }
 
     function selectVoteCandidate(playerId) {
@@ -2484,7 +2493,7 @@
             <div class="muted">Host starts the room and gets the code to share.</div>
             <br>
             <label class="field">Your name
-              <input id="createName" placeholder="Beverly" autocomplete="name">
+              <input id="createName" placeholder="Player name" autocomplete="name">
             </label>
             <br>
             <button class="btn gold full" id="createRoomBtn">Start Room</button>
@@ -2499,7 +2508,7 @@
             </label>
             <br>
             <label class="field">Room code
-              <input id="joinCode" value="${esc(urlRoom)}" placeholder="K7M4" autocapitalize="characters">
+              <input id="joinCode" value="${esc(urlRoom)}" placeholder="----" autocapitalize="characters">
             </label>
             <br>
             <button class="btn full" id="joinRoomBtn">Join Room</button>

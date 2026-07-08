@@ -1,0 +1,25 @@
+{
+  "name": "KORRUPTION",
+  "short_name": "KORRUPTION",
+  "description": "KORRUPTION digital and in-person room game.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#172317",
+  "theme_color": "#172317",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

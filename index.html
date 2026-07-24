@@ -4337,14 +4337,21 @@
 
   
     /* ===== ADAPTIVE FIT (scrollable when content grows past one screen) ===== */
-    html,
-    body {
+    html {
       width: 100% !important;
       height: auto !important;
       min-height: 100dvh !important;
       overflow-y: auto !important;
       overflow-x: hidden !important;
       -webkit-overflow-scrolling: touch !important;
+    }
+
+    body {
+      width: 100% !important;
+      height: auto !important;
+      min-height: 100dvh !important;
+      overflow-y: visible !important;
+      overflow-x: hidden !important;
     }
 
     .app,

@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>KUR·UP·SHUN</title>
+  <title>KOR·UP·SHUN</title>
   <meta name="theme-color" content="#172317" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="KURUPSHUN" />
+  <meta name="apple-mobile-web-app-title" content="KORUPSHUN" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
@@ -5442,6 +5442,197 @@
       .title { font-size: clamp(17px, 7vw, 26px) !important; }
     }
 
+
+    /* ===== PAY / CHAT DRAWER REDESIGN ===== */
+    .pay-player-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .pay-player-chip {
+      min-height: 40px;
+      border-radius: 12px;
+      border: 1px solid rgba(241,191,54,.30);
+      background: rgba(255,255,255,.06);
+      color: #fff6d8;
+      font-weight: 900;
+      font-size: 13px;
+      padding: 6px 8px;
+      cursor: pointer;
+    }
+
+    .pay-player-chip.selected {
+      background: linear-gradient(180deg, #ffe68b, #c38c17);
+      color: #2a1c06;
+      border-color: rgba(255,232,144,.9);
+      box-shadow: 0 4px 10px rgba(0,0,0,.30);
+    }
+
+    .pay-swipe-hint {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .4px;
+      color: rgba(255,246,216,.55);
+      margin-bottom: 6px;
+    }
+
+    .pay-swipe-strip {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      border-radius: 16px;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(241,191,54,.20);
+    }
+
+    .pay-swipe-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .pay-swipe-page {
+      flex: 0 0 100%;
+      scroll-snap-align: center;
+      min-width: 100%;
+      box-sizing: border-box;
+      padding: 12px;
+      min-height: 200px;
+    }
+
+    .pay-mode-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .pay-mode-btn {
+      min-height: 38px;
+      border-radius: 999px;
+      border: 1px solid rgba(241,191,54,.30);
+      background: rgba(255,255,255,.06);
+      color: #fff6d8;
+      font-weight: 950;
+      cursor: pointer;
+    }
+
+    .pay-mode-btn.selected {
+      background: linear-gradient(180deg, #ffe68b, #c38c17);
+      color: #2a1c06;
+      border-color: rgba(255,232,144,.9);
+    }
+
+    .quick-pay-wrap {
+      display: grid;
+      gap: 8px;
+      justify-items: center;
+    }
+
+    .quick-pay-total {
+      font-size: 30px;
+      font-weight: 1000;
+      color: #f9dd80;
+      text-shadow: 0 0 12px rgba(241,191,54,.20);
+    }
+
+    .quick-pay-chips {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      width: 100%;
+    }
+
+    .quick-pay-chip {
+      min-height: 46px;
+      font-size: 15px;
+    }
+
+    .quick-pay-clear {
+      opacity: .82;
+    }
+
+    .chat-compose-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chat-draft-input {
+      flex: 1 1 auto;
+      min-height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(241,191,54,.35);
+      background: rgba(255,255,255,.92);
+      padding: 8px 14px;
+      font-size: 15px;
+      color: #172317;
+    }
+
+    .chat-mic-btn {
+      flex: 0 0 auto;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(241,191,54,.42);
+      background: rgba(255,255,255,.10);
+      font-size: 18px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .chat-mic-btn.listening {
+      background: linear-gradient(180deg, #ff8b7a, #b8352a);
+      border-color: rgba(255,200,190,.9);
+      animation: micPulse 1s ease-in-out infinite;
+    }
+
+    @keyframes micPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,100,80,.45); }
+      50% { box-shadow: 0 0 0 8px rgba(255,100,80,0); }
+    }
+
+    .chat-send-btn {
+      flex: 0 0 auto;
+      min-height: 42px;
+    }
+
+    .chat-thread-scroll {
+      display: grid;
+      gap: 6px;
+      max-height: 260px;
+      overflow-y: auto;
+    }
+
+    .chat-bubble-row {
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .chat-bubble-row.me {
+      justify-content: flex-end;
+    }
+
+    .chat-bubble {
+      max-width: 78%;
+      padding: 8px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.10);
+      color: #fff6d8;
+      font-size: 14px;
+      line-height: 1.3;
+      border: 1px solid rgba(241,191,54,.20);
+    }
+
+    .chat-bubble.me {
+      background: linear-gradient(180deg, #ffe68b, #c38c17);
+      color: #2a1c06;
+      border-color: rgba(255,232,144,.9);
+    }
+
   </style>
 </head>
 
@@ -5449,7 +5640,7 @@
   <div class="app">
     <div class="shell">
       <div class="hero">
-        <div class="title">KUR<span class="mid-dot">·</span>UP<span class="mid-dot">·</span>SHUN</div>
+        <div class="title">KOR<span class="mid-dot">·</span>UP<span class="mid-dot">·</span>SHUN</div>
         <div id="heroChips"></div>
       </div>
 
@@ -5514,6 +5705,7 @@
       votes: [],
       notes: [],
       payments: [],
+      chatMessages: [],
       me: loadLocalPlayer(),
       setupMode: sessionStorage.getItem(MODE_KEY) || "in_person",
       pickColor: "Red",
@@ -5524,6 +5716,10 @@
       loading: false,
       showPayPanel: false,
       payToId: "",
+      payMode: "pay",
+      payAmountValue: 0,
+      chatDraft: "",
+      chatListening: false,
       pendingVoteId: "",
       resetConfirmOpen: false,
       shownMoneyBurstKey: ""
@@ -5961,15 +6157,17 @@
     function firstOpenIdentity(players) {
       const used = new Set((players || []).filter(hasPickedCard).map(p => p.color + "|" + normalizedSymbolName(p.shape)));
 
+      const open = [];
       for (const color of COLORS) {
         for (const symbol of SYMBOLS) {
           if (!used.has(color.name + "|" + symbol.name)) {
-            return { color: color.name, shape: symbol.name };
+            open.push({ color: color.name, shape: symbol.name });
           }
         }
       }
 
-      return null;
+      if (!open.length) return null;
+      return open[Math.floor(Math.random() * open.length)];
     }
 
     function pickedIdentity() {
@@ -6014,11 +6212,18 @@
       return appState.votes.length > 0;
     }
 
+    function canStartGameNow() {
+      if (!appState.room) return false;
+      if (appState.players.length < 2) return false;
+      if (appState.room.game_mode === "in_person" && !allPlayersPickedCards()) return false;
+      return appState.room.status === "lobby";
+    }
+
     function canStartRoundNow() {
       if (!appState.room) return false;
       if (appState.players.length < 2) return false;
       if (appState.room.game_mode === "in_person" && !allPlayersPickedCards()) return false;
-      return appState.room.status === "lobby" || appState.room.status === "results";
+      return appState.room.status === "starting" || appState.room.status === "results";
     }
 
     function chosenPlayerCanBeVotedFor() {
@@ -6351,6 +6556,7 @@
         appState.votes = [];
         appState.notes = [];
         appState.payments = [];
+        appState.chatMessages = [];
         appState.loading = false;
         setMessage("Room was not found.");
         render();
@@ -6377,6 +6583,7 @@
         appState.votes = [];
         appState.notes = [];
         appState.payments = [];
+        appState.chatMessages = [];
         appState.loading = false;
         setMessage("You are no longer in that room.");
         render();
@@ -6409,6 +6616,16 @@
 
       if (!paymentsRes.error) appState.payments = paymentsRes.data || [];
 
+      const chatRes = await db
+        .from("korr_chat_messages")
+        .select("*")
+        .eq("room_code", code)
+        .or("from_player_id.eq." + appState.me.playerId + ",to_player_id.eq." + appState.me.playerId)
+        .order("created_at", { ascending: true })
+        .limit(200);
+
+      if (!chatRes.error) appState.chatMessages = chatRes.data || [];
+
       const myVote = appState.votes.find(v => v.voter_player_id === appState.me.playerId);
       appState.selectedVote = myVote ? myVote.voted_for_player_id : appState.selectedVote;
 
@@ -6439,6 +6656,7 @@
         .on("postgres_changes", { event: "*", schema: "public", table: "korr_votes", filter: "room_code=eq." + code }, scheduleLoad)
         .on("postgres_changes", { event: "*", schema: "public", table: "korr_deal_notes", filter: "room_code=eq." + code }, scheduleLoad)
         .on("postgres_changes", { event: "*", schema: "public", table: "korr_payments", filter: "room_code=eq." + code }, scheduleLoad)
+        .on("postgres_changes", { event: "*", schema: "public", table: "korr_chat_messages", filter: "room_code=eq." + code }, scheduleLoad)
         .subscribe();
     }
 
@@ -7016,13 +7234,47 @@
       await loadAll();
     }
 
+    async function startGame() {
+      if (!amHost()) return;
+
+      const room = appState.room;
+
+      if (room.status !== "lobby") {
+        setMessage("The game has already started.");
+        return;
+      }
+
+      if (appState.players.length < 2) {
+        setMessage("Need at least 2 players before starting the game.");
+        return;
+      }
+
+      if (room.game_mode === "in_person" && !allPlayersPickedCards()) {
+        setMessage("Everyone needs to choose their color and symbol first.");
+        return;
+      }
+
+      const roomRes = await db
+        .from("korr_rooms")
+        .update({ status: "starting" })
+        .eq("room_code", room.room_code);
+
+      if (roomRes.error) {
+        setMessage(roomRes.error.message);
+        return;
+      }
+
+      setMessage("Game started. Press Start Timer when everyone is ready.");
+      await loadAll();
+    }
+
     async function nextRound() {
       if (!amHost()) return;
 
       const room = appState.room;
       const status = room.status;
 
-      if (status !== "lobby" && status !== "results") {
+      if (status !== "starting" && status !== "results") {
         setMessage("Finish the current step before starting the next round.");
         return;
       }
@@ -7103,6 +7355,7 @@
       await db.from("korr_votes").delete().eq("room_code", code);
       await db.from("korr_deal_notes").delete().eq("room_code", code);
       await db.from("korr_payments").delete().eq("room_code", code);
+      await db.from("korr_chat_messages").delete().eq("room_code", code);
 
       for (const p of appState.players) {
         await db
@@ -7126,6 +7379,111 @@
       appState.selectedVote = "";
       setMessage("Game reset.");
       await loadAll();
+    }
+
+    let voiceRecognition = null;
+    let voiceSilenceTimer = null;
+
+    async function sendChatMessage() {
+      if (!appState.me || !appState.room) return;
+
+      const input = $("chatDraftInput");
+      const text = ((input ? input.value : appState.chatDraft) || "").trim();
+      if (!text) return;
+
+      const others = appState.players.filter(p => p.id !== appState.me.playerId);
+      const selectedPay = others.find(p => p.id === appState.payToId) || others[0] || null;
+
+      if (!selectedPay) {
+        setMessage("Pick who you're chatting with.");
+        return;
+      }
+
+      appState.chatDraft = "";
+      if (input) input.value = "";
+
+      const res = await db
+        .from("korr_chat_messages")
+        .insert({
+          room_code: appState.room.room_code,
+          round_number: appState.room.round_number,
+          from_player_id: appState.me.playerId,
+          to_player_id: selectedPay.id,
+          message: text
+        });
+
+      if (res.error) {
+        setMessage("Chat error: " + res.error.message);
+        return;
+      }
+
+      await loadAll();
+    }
+
+    function toggleVoiceChat() {
+      if (appState.chatListening) {
+        stopVoiceChat(false);
+        return;
+      }
+
+      const SpeechRecognitionClass = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognitionClass) {
+        setMessage("Voice input is not supported on this browser.");
+        return;
+      }
+
+      voiceRecognition = new SpeechRecognitionClass();
+      voiceRecognition.lang = "en-US";
+      voiceRecognition.continuous = true;
+      voiceRecognition.interimResults = true;
+
+      appState.chatListening = true;
+      render();
+
+      voiceRecognition.onresult = (event) => {
+        let transcript = "";
+        for (let i = 0; i < event.results.length; i += 1) {
+          transcript += event.results[i][0].transcript;
+        }
+
+        appState.chatDraft = transcript;
+        const input = $("chatDraftInput");
+        if (input) input.value = transcript;
+
+        clearTimeout(voiceSilenceTimer);
+        voiceSilenceTimer = setTimeout(() => {
+          stopVoiceChat(true);
+        }, 2200);
+      };
+
+      voiceRecognition.onerror = () => {
+        stopVoiceChat(false);
+      };
+
+      voiceRecognition.onend = () => {
+        if (appState.chatListening) {
+          appState.chatListening = false;
+          render();
+        }
+      };
+
+      voiceRecognition.start();
+    }
+
+    function stopVoiceChat(autoSend) {
+      clearTimeout(voiceSilenceTimer);
+      appState.chatListening = false;
+
+      if (voiceRecognition) {
+        try { voiceRecognition.stop(); } catch (err) {}
+        voiceRecognition = null;
+      }
+
+      if (autoSend) {
+        sendChatMessage();
+      } else {
+        render();
+      }
     }
 
     async function payPlayer() {
@@ -7190,6 +7548,7 @@
 
       if ($("payAmount")) $("payAmount").value = "";
       if ($("payNote")) $("payNote").value = "";
+      appState.payAmountValue = 0;
 
       setMessage("Paid " + to.player_name + " " + money(amount) + ".");
       await loadAll();
@@ -7407,6 +7766,7 @@
           : status === "voting" ? "Vote"
           : status === "results" ? "Results"
           : status === "final" ? "Final"
+          : status === "starting" ? "Get Ready"
           : "Lobby";
         const me = myPlayer();
         const tradeEnabled = status === "deals";
@@ -7417,7 +7777,17 @@
 
         if (isHost) {
           reset = "";
-          if (status === "lobby" || status === "results") {
+          if (status === "lobby") {
+            if (canStartGameNow()) {
+              action = `<button class="btn small gold" id="startGameBtn">Start Game</button>`;
+            } else if (!allPlayersPickedCards()) {
+              action = `<span class="badge red">Waiting Cards</span>`;
+            }
+          } else if (status === "starting") {
+            if (canStartRoundNow()) {
+              action = `<button class="btn small gold" id="nextRoundBtn">Start Timer</button>`;
+            }
+          } else if (status === "results") {
             if (canStartRoundNow()) {
               action = `<button class="btn small gold" id="nextRoundBtn">${esc(roundButtonLabel)}</button>`;
             } else if (!allPlayersPickedCards()) {
@@ -7464,6 +7834,7 @@
         return;
       }
 
+      const gameReady = isHost && canStartGameNow();
       const roundReady = isHost && canStartRoundNow();
       const votingReady = isHost && status === "deals";
       const revealReady = isHost && canRevealNow();
@@ -7478,7 +7849,15 @@
       if (isHost) {
         leftButton = `<button class="btn small light" id="resetBtn">Reset</button>`;
 
-        if (status === "lobby" || status === "results") {
+        if (status === "lobby") {
+          if (gameReady) {
+            rightAction = `<button class="btn small gold" id="startGameBtn">Start Game</button>`;
+          }
+        } else if (status === "starting") {
+          if (roundReady) {
+            rightAction = `<button class="btn small gold" id="nextRoundBtn">Start Timer</button>`;
+          }
+        } else if (status === "results") {
           if (roundReady) {
             rightAction = `<button class="btn small gold" id="nextRoundBtn">${esc(roundButtonLabel)}</button>`;
           }
@@ -7534,7 +7913,7 @@
         root.innerHTML = `
           <div class="card dark">
             <div class="section-title">Loading...</div>
-            <div class="muted">Syncing KURUPSHUN room.</div>
+            <div class="muted">Syncing KORUPSHUN room.</div>
           </div>
         `;
         return;
@@ -7923,39 +8302,118 @@
       const me = myPlayer();
       const others = appState.players.filter(p => p.id !== appState.me.playerId);
       const selectedPay = others.find(p => p.id === appState.payToId) || others[0] || null;
-      const payValue = selectedPay ? selectedPay.id : "";
-      const payLabel = selectedPay ? selectedPay.player_name : "Choose player";
-      const payOptions = others
-        .map(p => `<button type="button" class="custom-pay-option ${selectedPay && selectedPay.id === p.id ? "selected" : ""}" data-pay-choice="${esc(p.id)}">${esc(p.player_name)}</button>`)
-        .join("");
+      if (selectedPay && appState.payToId !== selectedPay.id) appState.payToId = selectedPay.id;
+
+      return renderPayChatDrawer(me, others, selectedPay, "dark-field");
+    }
+
+    function renderPayChatDrawer(me, others, selectedPay, fieldClass) {
+      const playerGrid = others.map(p => `
+        <button type="button" class="pay-player-chip ${selectedPay && selectedPay.id === p.id ? "selected" : ""}" data-pay-choice="${esc(p.id)}">
+          ${esc(p.player_name)}
+        </button>
+      `).join("");
+
+      const amount = Number(appState.payAmountValue || 0);
 
       return `
         <div class="card dark inperson-pay-card pay-drawer">
-          <div class="section-title">Pay Player</div>
-          <div class="two">
-            <label class="field dark-field">Who
-              <input type="hidden" id="payPlayer" value="${esc(payValue)}">
-              <div class="custom-pay-picker">
-                <button type="button" class="custom-pay-trigger" id="payPickerBtn">
-                  <span id="payPickerLabel">${esc(payLabel)}</span>
-                  <span class="custom-pay-arrow">▾</span>
-                </button>
-                <div class="custom-pay-menu" id="payPickerMenu">
-                  ${payOptions || '<div class="custom-pay-empty">No players yet</div>'}
-                </div>
-              </div>
-            </label>
+          <div class="section-title">Pay / Chat</div>
 
-            <label class="field dark-field">Amount
-              <input id="payAmount" type="number" min="1" max="${esc(me ? me.score : 0)}">
-            </label>
+          <div class="pay-player-grid">
+            ${playerGrid || '<div class="custom-pay-empty">No players yet</div>'}
           </div>
 
-          <br>
-          <button class="btn gold full" id="payBtn">Send Money</button>
+          <input type="hidden" id="payPlayer" value="${esc(selectedPay ? selectedPay.id : "")}">
+          <input type="hidden" id="payAmount" value="${esc(amount)}">
 
+          <div class="pay-swipe-hint">◂ Chat&nbsp;&nbsp;·&nbsp;&nbsp;Transactions ▸</div>
+
+          <div class="pay-swipe-strip" id="paySwipeStrip">
+            <div class="pay-swipe-page pay-swipe-chat">
+              ${renderChatThread(selectedPay)}
+            </div>
+
+            <div class="pay-swipe-page pay-swipe-compose">
+              <div class="pay-mode-toggle">
+                <button type="button" class="pay-mode-btn ${appState.payMode === "pay" ? "selected" : ""}" data-pay-mode="pay">Pay</button>
+                <button type="button" class="pay-mode-btn ${appState.payMode === "chat" ? "selected" : ""}" data-pay-mode="chat">Chat</button>
+              </div>
+
+              ${appState.payMode === "chat" ? renderChatComposer(selectedPay) : renderQuickPayComposer(me, amount)}
+            </div>
+
+            <div class="pay-swipe-page pay-swipe-history">
+              ${renderPersonTransactionHistory(selectedPay)}
+            </div>
+          </div>
         </div>
       `;
+    }
+
+    function renderQuickPayComposer(me, amount) {
+      return `
+        <div class="quick-pay-wrap">
+          <div class="quick-pay-total">${esc(money(amount))}</div>
+          <div class="quick-pay-chips">
+            <button type="button" class="btn small light quick-pay-chip" data-quick-add="50">+$50</button>
+            <button type="button" class="btn small light quick-pay-chip" data-quick-add="100">+$100</button>
+            <button type="button" class="btn small light quick-pay-chip" data-quick-add="500">+$500</button>
+          </div>
+          <button type="button" class="btn small light quick-pay-clear" id="quickPayClearBtn" ${amount ? "" : "disabled"}>Clear</button>
+          <button class="btn gold full" id="payBtn" ${amount && amount <= Number(me ? me.score : 0) ? "" : "disabled"}>Send ${amount ? money(amount) : "Money"}</button>
+        </div>
+      `;
+    }
+
+    function renderChatComposer(selectedPay) {
+      if (!selectedPay) return '<div class="muted">Pick someone to chat with.</div>';
+
+      return `
+        <div class="chat-compose-wrap">
+          <input type="text" id="chatDraftInput" class="chat-draft-input" placeholder="Message ${esc(selectedPay.player_name)}..." value="${esc(appState.chatDraft || "")}">
+          <button type="button" class="chat-mic-btn ${appState.chatListening ? "listening" : ""}" id="chatMicBtn" title="Voice message">🎤</button>
+          <button type="button" class="btn small gold chat-send-btn" id="chatSendBtn">Send</button>
+        </div>
+      `;
+    }
+
+    function renderChatThread(selectedPay) {
+      if (!selectedPay) return '<div class="muted">Pick someone to see your chat.</div>';
+      if (!appState.me) return "";
+
+      const thread = appState.chatMessages.filter(m =>
+        (m.from_player_id === appState.me.playerId && m.to_player_id === selectedPay.id) ||
+        (m.from_player_id === selectedPay.id && m.to_player_id === appState.me.playerId)
+      );
+
+      if (!thread.length) {
+        return `<div class="muted">No messages with ${esc(selectedPay.player_name)} yet.</div>`;
+      }
+
+      return `
+        <div class="chat-thread-scroll">
+          ${thread.map(m => {
+            const fromMe = m.from_player_id === appState.me.playerId;
+            return `<div class="chat-bubble-row ${fromMe ? "me" : ""}"><div class="chat-bubble ${fromMe ? "me" : ""}">${esc(m.message)}</div></div>`;
+          }).join("")}
+        </div>
+      `;
+    }
+
+    function renderPersonTransactionHistory(selectedPay) {
+      if (!selectedPay) return '<div class="muted">Pick someone to see transactions.</div>';
+      if (!appState.me) return "";
+
+      const rows = myPaymentRows().filter(pay =>
+        pay.from_player_id === selectedPay.id || pay.to_player_id === selectedPay.id
+      );
+
+      if (!rows.length) {
+        return `<div class="muted">No payments with ${esc(selectedPay.player_name)} yet.</div>`;
+      }
+
+      return `<div class="deal-log-scroll">${rows.map(pay => paymentLine(pay, "dark-pay-item")).join("")}</div>`;
     }
 
     function renderVoteConfirmModal() {
@@ -8443,6 +8901,7 @@
 
     function wireGame() {
       const pairs = [
+        ["startGameBtn", startGame],
         ["clearTimerBtn", clearTimer],
         ["startVotingBtn", startVoting],
         ["revealBtn", revealAndScore],
@@ -8523,16 +8982,67 @@
         btn.addEventListener("click", () => {
           const id = btn.getAttribute("data-pay-choice") || "";
           appState.payToId = id;
+          appState.payAmountValue = 0;
+          appState.chatDraft = "";
+
           const hidden = $("payPlayer");
           const label = $("payPickerLabel");
           const picker = btn.closest(".custom-pay-picker");
           if (hidden) hidden.value = id;
           if (label) label.textContent = btn.textContent || "Choose player";
-          document.querySelectorAll("[data-pay-choice]").forEach(item => item.classList.remove("selected"));
-          btn.classList.add("selected");
           if (picker) picker.classList.remove("open");
+
+          render();
         });
       });
+
+      document.querySelectorAll("[data-quick-add]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const add = Number(btn.getAttribute("data-quick-add") || 0);
+          appState.payAmountValue = Number(appState.payAmountValue || 0) + add;
+          render();
+        });
+      });
+
+      const quickPayClearBtn = $("quickPayClearBtn");
+      if (quickPayClearBtn) {
+        quickPayClearBtn.addEventListener("click", () => {
+          appState.payAmountValue = 0;
+          render();
+        });
+      }
+
+      document.querySelectorAll("[data-pay-mode]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          appState.payMode = btn.getAttribute("data-pay-mode") || "pay";
+          render();
+        });
+      });
+
+      const chatSendBtn = $("chatSendBtn");
+      if (chatSendBtn) {
+        chatSendBtn.addEventListener("click", () => sendChatMessage());
+      }
+
+      const chatDraftInput = $("chatDraftInput");
+      if (chatDraftInput) {
+        chatDraftInput.addEventListener("input", () => {
+          appState.chatDraft = chatDraftInput.value;
+        });
+        chatDraftInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") sendChatMessage();
+        });
+      }
+
+      const chatMicBtn = $("chatMicBtn");
+      if (chatMicBtn) {
+        chatMicBtn.addEventListener("click", () => toggleVoiceChat());
+      }
+
+      const paySwipeStrip = $("paySwipeStrip");
+      if (paySwipeStrip) {
+        paySwipeStrip.scrollLeft = paySwipeStrip.clientWidth;
+      }
 
       wireCarouselAutoSelect();
       updateVoteButtonState();

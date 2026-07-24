@@ -4355,7 +4355,7 @@
 
     .shell {
       display: grid !important;
-      grid-template-rows: auto auto auto minmax(0, 1fr) 0px !important;
+      grid-template-rows: auto auto auto auto 0px !important;
       gap: clamp(3px, .8dvh, 7px) !important;
       padding-top: max(6px, env(safe-area-inset-top)) !important;
       padding-bottom: max(4px, env(safe-area-inset-bottom)) !important;
@@ -4379,6 +4379,7 @@
 
     main#app {
       min-height: 0 !important;
+      min-width: 0 !important;
       height: auto !important;
       overflow: visible !important;
       display: flex !important;
@@ -4436,7 +4437,10 @@
 
     .inperson-deal-log,
     .art-stage {
-      min-height: 0 !important;
+      height: min(58dvh, 560px) !important;
+      min-height: 320px !important;
+      min-width: 0 !important;
+      width: 100% !important;
       overflow: hidden !important;
     }
 
@@ -4448,6 +4452,8 @@
 
     .art-carousel {
       min-height: 0 !important;
+      min-width: 0 !important;
+      width: 100% !important;
       height: 100% !important;
       padding-top: 2px !important;
       padding-bottom: 3px !important;

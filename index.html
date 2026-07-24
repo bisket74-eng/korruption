@@ -5679,13 +5679,50 @@
       border-color: rgba(255,232,144,.9);
     }
 
+    #heroMission {
+      position: absolute;
+      left: 20px;
+      bottom: 8px;
+      z-index: 2;
+      max-width: 60%;
+    }
+
+    .hero-mission-line {
+      font-size: 12px;
+      font-weight: 900;
+      color: #f9dd80;
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(241,191,54,.42);
+      border-radius: 999px;
+      padding: 3px 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: inline-block;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 430px) {
+      #heroMission {
+        left: 16px;
+        bottom: 6px;
+        max-width: 55%;
+      }
+
+      .hero-mission-line {
+        font-size: 11px;
+        padding: 2px 8px;
+      }
+    }
+
     .missions-toggle-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      padding: 6px 10px;
-      margin-bottom: 6px;
+      padding: 4px 10px;
+      margin: -2px 0 4px;
       border-radius: 12px;
       background: rgba(255,255,255,.06);
       border: 1px solid rgba(241,191,54,.24);
@@ -5697,6 +5734,72 @@
       font-size: 13px;
     }
 
+    .mission-reveal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 20000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0);
+      pointer-events: none;
+      transition: background .4s ease;
+      padding: 20px;
+    }
+
+    .mission-reveal-overlay.mission-reveal-in {
+      background: rgba(0,0,0,.72);
+    }
+
+    .mission-reveal-card {
+      text-align: center;
+      transform: scale(.2);
+      opacity: 0;
+      transition: transform .5s cubic-bezier(.2,.9,.3,1.3), opacity .4s ease;
+    }
+
+    .mission-reveal-overlay.mission-reveal-in .mission-reveal-card {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .mission-reveal-overlay.mission-reveal-out {
+      background: rgba(0,0,0,0);
+    }
+
+    .mission-reveal-overlay.mission-reveal-out .mission-reveal-card {
+      transform: scale(.15) translateY(-42vh);
+      opacity: 0;
+      transition: transform .7s cubic-bezier(.5,-.2,.7,0), opacity .6s ease;
+    }
+
+    .mission-reveal-emoji {
+      font-size: clamp(60px, 20vw, 110px);
+      line-height: 1;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,.6));
+    }
+
+    .mission-reveal-title {
+      font-family: Rockwell, "Roboto Slab", Georgia, "Times New Roman", serif;
+      font-weight: 900;
+      font-size: clamp(28px, 8vw, 46px);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: #f9dd80;
+      text-shadow: 0 4px 16px rgba(0,0,0,.7);
+      margin-bottom: 8px;
+    }
+
+    .mission-reveal-target {
+      font-family: Rockwell, "Roboto Slab", Georgia, "Times New Roman", serif;
+      font-weight: 900;
+      font-size: clamp(24px, 7vw, 40px);
+      color: #fff6d8;
+      text-shadow: 0 4px 16px rgba(0,0,0,.7);
+      max-width: 90vw;
+    }
+
   </style>
 </head>
 
@@ -5705,6 +5808,7 @@
     <div class="shell">
       <div class="hero">
         <div class="title">KOR<span class="mid-dot">·</span>UP<span class="mid-dot">·</span>SHUN</div>
+        <div id="heroMission"></div>
         <div id="heroChips"></div>
       </div>
 
@@ -7541,6 +7645,8 @@
 
     let voiceRecognition = null;
     let lastCenteredPayTarget = null;
+    let missionRevealShownKey = null;
+    let startingObservedAt = null;
     let paySwipeCurrentPage = 1;
 
     async function sendChatMessage() {
@@ -7896,6 +8002,65 @@
       }
     }
 
+    function showMissionOverlay(targetName) {
+      const overlay = document.createElement("div");
+      overlay.className = "mission-reveal-overlay";
+      overlay.innerHTML = `
+        <div class="mission-reveal-card">
+          <div class="mission-reveal-emoji">🤫</div>
+          <div class="mission-reveal-title">Secret Mission</div>
+          <div class="mission-reveal-target">Get ${esc(targetName)} to medal</div>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+
+      requestAnimationFrame(() => {
+        overlay.classList.add("mission-reveal-in");
+      });
+
+      setTimeout(() => {
+        overlay.classList.remove("mission-reveal-in");
+        overlay.classList.add("mission-reveal-out");
+      }, 4600);
+
+      setTimeout(() => {
+        overlay.remove();
+      }, 5400);
+    }
+
+    function missionRevealWaitDone() {
+      if (!appState.room || !appState.room.missions_enabled) return true;
+      if (appState.room.status !== "starting") return true;
+      if (startingObservedAt === null) return false;
+      return (Date.now() - startingObservedAt) >= 5700;
+    }
+
+    function maybeShowMissionReveal() {
+      if (!appState.room || appState.room.status !== "starting") {
+        startingObservedAt = null;
+        return;
+      }
+
+      if (startingObservedAt === null) {
+        startingObservedAt = Date.now();
+        setTimeout(render, 5700);
+      }
+
+      if (!appState.room.missions_enabled) return;
+
+      const key = appState.room.room_code + "-" + appState.room.round_number + "-starting";
+      if (missionRevealShownKey === key) return;
+
+      const me = myPlayer();
+      if (!me || !me.secret_target_id) return;
+
+      const target = playerById(me.secret_target_id);
+      if (!target) return;
+
+      missionRevealShownKey = key;
+      showMissionOverlay(target.player_name);
+    }
+
     function renderHeroChips() {
       const holder = $("heroChips");
       if (!holder) return;
@@ -7908,6 +8073,32 @@
       holder.innerHTML = `
         <button class="hero-exit-btn" id="exitRoomAskBtn" title="Exit this room">×</button>
         <div class="big-room-code">${esc(appState.room.room_code)}</div>
+      `;
+    }
+
+    function renderHeroMission() {
+      const holder = $("heroMission");
+      if (!holder) return;
+
+      if (!appState.room || !appState.room.missions_enabled || appState.room.status === "lobby") {
+        holder.innerHTML = "";
+        return;
+      }
+
+      const me = myPlayer();
+      if (!me || !me.secret_target_id) {
+        holder.innerHTML = "";
+        return;
+      }
+
+      const target = playerById(me.secret_target_id);
+      if (!target) {
+        holder.innerHTML = "";
+        return;
+      }
+
+      holder.innerHTML = `
+        <div class="hero-mission-line">🤫 Get ${esc(target.player_name)} to medal</div>
       `;
     }
 
@@ -7950,8 +8141,10 @@
               action = `<span class="badge red">Waiting Cards</span>`;
             }
           } else if (status === "starting") {
-            if (canStartRoundNow()) {
+            if (canStartRoundNow() && missionRevealWaitDone()) {
               action = `<button class="btn small gold" id="nextRoundBtn">Start Timer</button>`;
+            } else if (!missionRevealWaitDone()) {
+              action = `<span class="badge red">Revealing missions...</span>`;
             }
           } else if (status === "results") {
             if (canStartRoundNow()) {
@@ -8028,8 +8221,10 @@
             rightAction = `<button class="btn small gold" id="startGameBtn">Start Game</button>`;
           }
         } else if (status === "starting") {
-          if (roundReady) {
+          if (roundReady && missionRevealWaitDone()) {
             rightAction = `<button class="btn small gold" id="nextRoundBtn">Start Timer</button>`;
+          } else if (!missionRevealWaitDone()) {
+            rightAction = `<span class="badge red">Revealing missions...</span>`;
           }
         } else if (status === "results") {
           if (roundReady) {
@@ -8083,6 +8278,8 @@
 
       renderMessage();
       renderHeroChips();
+      renderHeroMission();
+      maybeShowMissionReveal();
       renderTopControls();
 
       const root = $("app");
@@ -8575,7 +8772,7 @@
         <div class="chat-compose-wrap">
           <input type="text" id="chatDraftInput" class="chat-draft-input" placeholder="Message ${esc(selectedPay.player_name)}..." value="${esc(appState.chatDraft || "")}">
           <div class="chat-action-row">
-            <button type="button" class="chat-mic-pill ${appState.chatListening ? "listening" : ""}" id="chatMicBtn" title="Voice message">🎤 ${appState.chatListening ? "Listening..." : "Hold to talk"}</button>
+            <button type="button" class="chat-mic-pill ${appState.chatListening ? "listening" : ""}" id="chatMicBtn" title="Voice message">🎤 ${appState.chatListening ? "Listening..." : "Press to talk"}</button>
             <button type="button" class="btn gold chat-send-btn" id="chatSendBtn">Send</button>
           </div>
         </div>

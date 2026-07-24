@@ -4335,22 +4335,22 @@
     }
 
   
-    /* ===== NO PAGE SCROLL ADAPTIVE FIT AFTER HEADER CHANGE ===== */
+    /* ===== ADAPTIVE FIT (scrollable when content grows past one screen) ===== */
     html,
     body {
       width: 100% !important;
-      height: 100dvh !important;
+      height: auto !important;
       min-height: 100dvh !important;
-      max-height: 100dvh !important;
-      overflow: hidden !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      -webkit-overflow-scrolling: touch !important;
     }
 
     .app,
     .shell {
-      height: 100dvh !important;
       min-height: 100dvh !important;
-      max-height: 100dvh !important;
-      overflow: hidden !important;
+      height: auto !important;
+      overflow-y: visible !important;
     }
 
     .shell {
@@ -4380,7 +4380,7 @@
     main#app {
       min-height: 0 !important;
       height: auto !important;
-      overflow: hidden !important;
+      overflow: visible !important;
       display: flex !important;
       flex-direction: column !important;
     }
@@ -8633,21 +8633,6 @@
       `;
     }
 
-    function renderMySecretMission() {
-      if (!appState.room || !appState.room.missions_enabled) return "";
-      const me = myPlayer();
-      if (!me || !me.secret_target_id) return "";
-
-      const target = playerById(me.secret_target_id);
-      if (!target) return "";
-
-      return `
-        <div class="badge gold" style="display:block;text-align:center;margin-bottom:6px;">
-          🤫 Your Secret Mission: root for <b>${esc(target.player_name)}</b> to medal
-        </div>
-      `;
-    }
-
     function renderInPersonDealStage() {
       const status = appState.room ? appState.room.status : "lobby";
       const isDeals = status === "deals";
@@ -8663,7 +8648,6 @@
 
       return `
         <div class="deal-stage-wrap">
-          ${isDeals ? renderMySecretMission() : ""}
           ${isDeals ? renderDealMoneyLog() : renderStartSoonStage()}
           ${appState.showPayPanel && isDeals ? renderInPersonPayCard() : ""}
         </div>

@@ -5499,13 +5499,11 @@
     .pay-swipe-strip {
       display: flex;
       overflow-x: auto;
-      overflow-y: hidden;
       scroll-snap-type: x mandatory;
       scrollbar-width: none;
       border-radius: 16px;
       background: rgba(0,0,0,.18);
       border: 1px solid rgba(241,191,54,.20);
-      height: 280px;
     }
 
     .pay-swipe-strip::-webkit-scrollbar {
@@ -5518,10 +5516,9 @@
       scroll-snap-stop: always;
       min-width: 100%;
       max-width: 100%;
-      height: 100%;
       box-sizing: border-box;
       padding: 12px;
-      overflow-y: auto;
+      min-height: 230px;
     }
 
     .pay-mode-toggle {
@@ -5626,6 +5623,14 @@
       display: grid;
       gap: 6px;
       align-content: start;
+      max-height: 210px;
+      overflow-y: auto;
+    }
+
+    .pay-swipe-history .deal-log-scroll {
+      height: auto !important;
+      max-height: 210px !important;
+      overflow-y: auto !important;
     }
 
     .chat-bubble-row {

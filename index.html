@@ -5471,22 +5471,41 @@
     }
 
     .pay-swipe-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
       text-align: center;
       font-size: 11px;
       font-weight: 900;
       letter-spacing: .4px;
-      color: rgba(255,246,216,.55);
       margin-bottom: 6px;
+    }
+
+    .pay-swipe-hint .hint-seg {
+      color: rgba(255,246,216,.42);
+      transition: color .15s ease;
+    }
+
+    .pay-swipe-hint .hint-seg.active {
+      color: #f9dd80;
+      text-shadow: 0 0 8px rgba(241,191,54,.30);
+    }
+
+    .pay-swipe-hint .hint-dot {
+      color: rgba(255,246,216,.30);
     }
 
     .pay-swipe-strip {
       display: flex;
       overflow-x: auto;
+      overflow-y: hidden;
       scroll-snap-type: x mandatory;
       scrollbar-width: none;
       border-radius: 16px;
       background: rgba(0,0,0,.18);
       border: 1px solid rgba(241,191,54,.20);
+      height: 280px;
     }
 
     .pay-swipe-strip::-webkit-scrollbar {
@@ -5496,10 +5515,13 @@
     .pay-swipe-page {
       flex: 0 0 100%;
       scroll-snap-align: center;
+      scroll-snap-stop: always;
       min-width: 100%;
+      max-width: 100%;
+      height: 100%;
       box-sizing: border-box;
       padding: 12px;
-      min-height: 200px;
+      overflow-y: auto;
     }
 
     .pay-mode-toggle {
@@ -5603,8 +5625,7 @@
     .chat-thread-scroll {
       display: grid;
       gap: 6px;
-      max-height: 260px;
-      overflow-y: auto;
+      align-content: start;
     }
 
     .chat-bubble-row {
@@ -5625,6 +5646,8 @@
       font-size: 14px;
       line-height: 1.3;
       border: 1px solid rgba(241,191,54,.20);
+      word-break: break-word;
+      overflow-wrap: anywhere;
     }
 
     .chat-bubble.me {
@@ -7382,7 +7405,7 @@
     }
 
     let voiceRecognition = null;
-    let voiceSilenceTimer = null;
+    let lastCenteredPayTarget = null;
 
     async function sendChatMessage() {
       if (!appState.me || !appState.room) return;
@@ -7434,26 +7457,30 @@
 
       voiceRecognition = new SpeechRecognitionClass();
       voiceRecognition.lang = "en-US";
-      voiceRecognition.continuous = true;
+      voiceRecognition.continuous = false;
       voiceRecognition.interimResults = true;
+
+      let finalTranscript = "";
 
       appState.chatListening = true;
       render();
 
       voiceRecognition.onresult = (event) => {
-        let transcript = "";
-        for (let i = 0; i < event.results.length; i += 1) {
-          transcript += event.results[i][0].transcript;
+        let interim = "";
+
+        for (let i = event.resultIndex; i < event.results.length; i += 1) {
+          const chunk = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            finalTranscript += chunk;
+          } else {
+            interim += chunk;
+          }
         }
 
-        appState.chatDraft = transcript;
+        const shown = (finalTranscript + interim).trim();
+        appState.chatDraft = shown;
         const input = $("chatDraftInput");
-        if (input) input.value = transcript;
-
-        clearTimeout(voiceSilenceTimer);
-        voiceSilenceTimer = setTimeout(() => {
-          stopVoiceChat(true);
-        }, 2200);
+        if (input) input.value = shown;
       };
 
       voiceRecognition.onerror = () => {
@@ -7461,8 +7488,17 @@
       };
 
       voiceRecognition.onend = () => {
-        if (appState.chatListening) {
-          appState.chatListening = false;
+        appState.chatListening = false;
+        voiceRecognition = null;
+
+        const finished = finalTranscript.trim() || (appState.chatDraft || "").trim();
+
+        if (finished) {
+          appState.chatDraft = finished;
+          const input = $("chatDraftInput");
+          if (input) input.value = finished;
+          sendChatMessage();
+        } else {
           render();
         }
       };
@@ -7470,8 +7506,7 @@
       voiceRecognition.start();
     }
 
-    function stopVoiceChat(autoSend) {
-      clearTimeout(voiceSilenceTimer);
+    function stopVoiceChat() {
       appState.chatListening = false;
 
       if (voiceRecognition) {
@@ -7479,11 +7514,7 @@
         voiceRecognition = null;
       }
 
-      if (autoSend) {
-        sendChatMessage();
-      } else {
-        render();
-      }
+      render();
     }
 
     async function payPlayer() {
@@ -8327,7 +8358,13 @@
           <input type="hidden" id="payPlayer" value="${esc(selectedPay ? selectedPay.id : "")}">
           <input type="hidden" id="payAmount" value="${esc(amount)}">
 
-          <div class="pay-swipe-hint">◂ Chat&nbsp;&nbsp;·&nbsp;&nbsp;Transactions ▸</div>
+          <div class="pay-swipe-hint" id="paySwipeHint">
+            <span class="hint-seg" data-seg="0">◂ Chat</span>
+            <span class="hint-dot">·</span>
+            <span class="hint-seg" data-seg="1">Pay</span>
+            <span class="hint-dot">·</span>
+            <span class="hint-seg" data-seg="2">Transactions ▸</span>
+          </div>
 
           <div class="pay-swipe-strip" id="paySwipeStrip">
             <div class="pay-swipe-page pay-swipe-chat">
@@ -9041,7 +9078,20 @@
 
       const paySwipeStrip = $("paySwipeStrip");
       if (paySwipeStrip) {
-        paySwipeStrip.scrollLeft = paySwipeStrip.clientWidth;
+        const updateSwipeHint = () => {
+          const idx = Math.round(paySwipeStrip.scrollLeft / Math.max(1, paySwipeStrip.clientWidth));
+          document.querySelectorAll(".hint-seg").forEach(seg => {
+            seg.classList.toggle("active", Number(seg.getAttribute("data-seg")) === idx);
+          });
+        };
+
+        if (lastCenteredPayTarget !== appState.payToId) {
+          paySwipeStrip.scrollLeft = paySwipeStrip.clientWidth;
+          lastCenteredPayTarget = appState.payToId;
+        }
+
+        paySwipeStrip.addEventListener("scroll", updateSwipeHint);
+        updateSwipeHint();
       }
 
       wireCarouselAutoSelect();

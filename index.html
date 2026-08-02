@@ -6019,6 +6019,180 @@
       .transfer-person-btn { font-size: 11px !important; }
       .transfer-player-list.many-players .transfer-person-dot { display: none !important; }
     }
+
+
+    /* ===== TWO-PAGE PAY / CHAT DRAWER ===== */
+    .transfer-drawer {
+      margin-top: 0 !important;
+      grid-template-rows: auto auto auto minmax(0, 1fr) !important;
+    }
+
+    .transfer-drawer-head {
+      min-height: 34px !important;
+      padding: 6px 12px 3px !important;
+      background: transparent !important;
+    }
+
+    .transfer-drawer-title {
+      font-size: clamp(15px, 4.2vw, 18px) !important;
+      line-height: 1 !important;
+    }
+
+    .transfer-fixed-dots,
+    .transfer-page-hint,
+    .transfer-fixed-player-title,
+    .transfer-page-dots {
+      display: none !important;
+    }
+
+    .transfer-fixed-player-zone {
+      padding: 3px 10px 0 !important;
+      border-top: 0 !important;
+    }
+
+    .transfer-fixed-actions {
+      height: 46px !important;
+      min-height: 46px !important;
+      max-height: 46px !important;
+      padding: 4px 10px 5px !important;
+      gap: 8px !important;
+      align-items: stretch !important;
+    }
+
+    .transfer-fixed-actions .transfer-action-btn {
+      height: 37px !important;
+      min-height: 37px !important;
+      max-height: 37px !important;
+      padding: 0 12px !important;
+      border-radius: 12px !important;
+      font-size: 14px !important;
+      line-height: 37px !important;
+      align-self: center !important;
+    }
+
+    .transfer-viewport {
+      min-height: 0 !important;
+      overflow: hidden !important;
+      touch-action: pan-y pan-x !important;
+    }
+
+    .transfer-track {
+      width: 200% !important;
+      height: 100% !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .transfer-track.page-home { transform: translateX(0) !important; }
+    .transfer-track.page-chat { transform: translateX(-50%) !important; }
+
+    .transfer-page {
+      min-width: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 0 !important;
+      overflow: hidden !important;
+      padding: 7px 10px 9px !important;
+    }
+
+    .transfer-home-page {
+      display: grid !important;
+      grid-template-rows: auto auto minmax(0, 1fr) !important;
+      align-content: stretch !important;
+      gap: 6px !important;
+    }
+
+    .transfer-home-page .quick-pay-panel {
+      flex: none !important;
+      min-height: 0 !important;
+      padding: 7px !important;
+      display: block !important;
+    }
+
+    .quick-pay-total {
+      min-height: 38px !important;
+      margin: 3px 0 6px !important;
+      font-size: 24px !important;
+    }
+
+    .quick-pay-add {
+      min-height: 36px !important;
+    }
+
+    .quick-pay-clear,
+    .quick-pay-send {
+      min-height: 37px !important;
+    }
+
+    .pay-log-heading {
+      color: rgba(255,245,212,.68);
+      font-size: 10px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      padding: 1px 2px 0;
+    }
+
+    .pay-page-log {
+      min-height: 0 !important;
+      overflow-y: auto !important;
+      overscroll-behavior: contain !important;
+      -webkit-overflow-scrolling: touch !important;
+      padding-right: 2px;
+    }
+
+    .private-chat-page {
+      display: grid !important;
+      grid-template-rows: minmax(0, 1fr) auto !important;
+      height: 100% !important;
+      min-height: 0 !important;
+      overflow: hidden !important;
+      padding-top: 5px !important;
+    }
+
+    .private-chat-messages {
+      min-height: 0 !important;
+      height: 100% !important;
+      overflow-y: auto !important;
+      overscroll-behavior: contain !important;
+      -webkit-overflow-scrolling: touch !important;
+      padding: 2px 2px 8px !important;
+      scroll-padding-bottom: 8px;
+    }
+
+    .private-chat-compose {
+      position: relative !important;
+      z-index: 2 !important;
+      flex: none !important;
+      background: rgba(3,7,4,.98) !important;
+      padding-top: 6px !important;
+    }
+
+    .compact-empty {
+      min-height: 72px !important;
+      padding: 10px !important;
+    }
+
+    @media (max-height: 760px) {
+      .transfer-drawer-head {
+        min-height: 30px !important;
+        padding: 4px 10px 2px !important;
+      }
+      .transfer-person-btn { min-height: 34px !important; }
+      .transfer-fixed-actions {
+        height: 42px !important;
+        min-height: 42px !important;
+        max-height: 42px !important;
+        padding-top: 3px !important;
+        padding-bottom: 4px !important;
+      }
+      .transfer-fixed-actions .transfer-action-btn {
+        height: 35px !important;
+        min-height: 35px !important;
+        max-height: 35px !important;
+        line-height: 35px !important;
+      }
+      .transfer-page { padding-top: 5px !important; }
+    }
 </style>
 </head>
 
@@ -9398,12 +9572,12 @@
     }
 
     function transferPageIndex(page) {
-      return page === "chat" ? 0 : page === "transactions" ? 2 : 1;
+      return page === "chat" ? 1 : 0;
     }
 
     function setTransferPage(page) {
-      const allowed = ["transactions", "home", "chat"];
-      appState.transferPage = allowed.includes(page) ? page : "home";
+      appState.transferPage = page === "chat" ? "chat" : "home";
+      appState.transferAction = appState.transferPage === "chat" ? "chat" : "pay";
       render();
     }
 
@@ -9487,9 +9661,27 @@
 
     function renderTransferHomePage() {
       const person = selectedTransferPlayer();
+      const rows = person ? pairPayments(person.id) : [];
       return `
         <section class="transfer-page transfer-home-page" data-transfer-page="home">
-          ${person ? renderQuickPayPanel(person) : '<div class="transfer-empty">Choose a player above to make a payment.</div>'}
+          ${person ? `
+            ${renderQuickPayPanel(person)}
+            <div class="pay-log-heading">Money log with ${esc(person.player_name)}</div>
+            <div class="pair-transaction-list pay-page-log">
+              ${!rows.length ? `<div class="transfer-empty compact-empty">No money transactions with ${esc(person.player_name)} yet.</div>` : rows.map(pay => {
+                const sent = pay.from_player_id === appState.me.playerId;
+                return `
+                  <div class="pair-transaction">
+                    <div class="pair-transaction-copy">
+                      <b>${sent ? "You paid " + esc(person.player_name) : esc(person.player_name) + " paid you"}</b>
+                      <small>Round ${esc(pay.round_number || "-")} · ${esc(shortTransferTime(pay.created_at))}${pay.note ? " · " + esc(pay.note) : ""}</small>
+                    </div>
+                    <div class="pair-transaction-amount ${sent ? "sent" : "received"}">${sent ? "-" : "+"}${esc(money(pay.amount))}</div>
+                  </div>
+                `;
+              }).join("")}
+            </div>
+          ` : '<div class="transfer-empty">Choose a player above to make a payment.</div>'}
         </section>
       `;
     }
@@ -9525,9 +9717,8 @@
       const rows = person ? pairChats(person.id) : [];
       return `
         <section class="transfer-page private-chat-page" data-transfer-page="chat">
-          <div class="transfer-pane-heading">Private chat${person ? " · " + esc(person.player_name) : ""}</div>
           <div class="private-chat-messages" id="privateChatMessages">
-            ${!person ? '<div class="transfer-empty">Choose a player above to open private chat.</div>' : !rows.length ? `<div class="transfer-empty">No private messages with ${esc(person.player_name)} yet.</div>` : rows.map(note => {
+            ${!person ? '<div class="transfer-empty">Choose a player above to open private chat.</div>' : !rows.length ? `<div class="transfer-empty compact-empty">No private messages with ${esc(person.player_name)} yet.</div>` : rows.map(note => {
               const mine = note.player_id === appState.me.playerId;
               return `<div class="private-chat-bubble ${mine ? "mine" : ""}">${esc(note.note || "")}<span class="private-chat-time">${esc(shortTransferTime(note.created_at))}</span></div>`;
             }).join("")}
@@ -9544,38 +9735,28 @@
 
     function renderTransferDrawer() {
       const person = selectedTransferPlayer();
-      const pageClass = appState.transferPage === "transactions" ? "page-transactions" : appState.transferPage === "chat" ? "page-chat" : "page-home";
-      const onHome = appState.transferPage === "home";
+      const pageClass = appState.transferPage === "chat" ? "page-chat" : "page-home";
+      const onPay = appState.transferPage !== "chat";
       const onChat = appState.transferPage === "chat";
-      const onTransactions = appState.transferPage === "transactions";
       return `
         <div class="transfer-drawer" id="transferDrawer">
           <div class="transfer-drawer-head">
-            <div class="transfer-drawer-title">Pay or Chat${person ? " · " + esc(person.player_name) : ""}</div>
+            <div class="transfer-drawer-title">${person ? esc(person.player_name) : "Choose a player"}</div>
           </div>
-
-          <div class="transfer-fixed-dots" aria-label="Pay, chat, and transaction pages">
-            <button class="transfer-dot-nav ${onChat ? "active" : ""}" data-transfer-nav="chat" aria-label="Private chat"></button>
-            <button class="transfer-dot-nav ${onHome ? "active" : ""}" data-transfer-nav="home" aria-label="Payment"></button>
-            <button class="transfer-dot-nav ${onTransactions ? "active" : ""}" data-transfer-nav="transactions" aria-label="Money log"></button>
-          </div>
-          <div class="transfer-page-hint">Swipe left for money log · right for chat</div>
 
           <div class="transfer-fixed-player-zone">
-            <div class="transfer-fixed-player-title">Choose a player</div>
             ${renderTransferPlayerButtons()}
           </div>
 
           <div class="transfer-action-row transfer-fixed-actions">
-            <button type="button" class="transfer-action-btn ${onHome ? "active" : ""}" id="openPersonPayBtn" ${person ? "" : "disabled"}>Pay</button>
+            <button type="button" class="transfer-action-btn ${onPay ? "active" : ""}" id="openPersonPayBtn" ${person ? "" : "disabled"}>Pay</button>
             <button type="button" class="transfer-action-btn ${onChat ? "active" : ""}" id="openPersonChatBtn" ${person ? "" : "disabled"}>Chat</button>
           </div>
 
           <div class="transfer-viewport" id="transferSwipeArea">
             <div class="transfer-track ${pageClass}" id="transferTrack">
-              ${renderTransferChatPage()}
               ${renderTransferHomePage()}
-              ${renderTransferTransactionsPage()}
+              ${renderTransferChatPage()}
             </div>
           </div>
         </div>
@@ -9882,10 +10063,10 @@
           const dx = touch.clientX - startX;
           const dy = touch.clientY - startY;
           if (Math.abs(dx) < 28 || Math.abs(dx) < Math.abs(dy)) return;
-          const pages = ["chat", "home", "transactions"];
+          const pages = ["home", "chat"];
           let index = transferPageIndex(appState.transferPage);
-          if (dx < 0) index = Math.min(2, index + 1);
-          else index = Math.max(0, index - 1);
+          if (dx < 0) index = 1;
+          else index = 0;
           if (pages[index] !== appState.transferPage) setTransferPage(pages[index]);
         }, { passive: true });
       }
